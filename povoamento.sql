@@ -54,7 +54,7 @@ INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALU
 
 INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (7, "folhado", "salgado", 5.00, 2);
 
-INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (8, "pçao pizza", "salgado", 6.00, 2);
+INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (8, "pão pizza", "salgado", 6.00, 2);
 
 INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (9, "água", "bebida", 3.00, 3);
 
@@ -74,3 +74,52 @@ INSERT INTO promocao(codigo_promocional, valor_desconto, data_termino) VALUES (0
 
 INSERT INTO promocao(codigo_promocional, valor_desconto, data_termino) VALUES (02, 0.20, to_date('26/12/2021', 'dd/mm/yy'));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 1, 1, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 2, 1, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 3, 1, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 4, 2, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 5, 2, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 6, 2, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 7, 2, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 8, 2, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 9, 3, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 10, 3, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 11, 3, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 12, 3, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 13, 4, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 14, 4, "222.333.444-55")
+
+INSERT INTO armazena(data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena) VALUES (to_date('04/11/2021', 'dd/mm/yy'), 15, 4, "222.333.444-55")
