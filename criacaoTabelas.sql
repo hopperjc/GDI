@@ -4,14 +4,14 @@ DROP TABLE funcionario;
 DROP TABLE cliente;
 DROP TABLE estoque;
 DROP TABLE produto;
-DROP TABLE promoção;
-DROP TABLE cartão_fidelidade;
+DROP TABLE promocao;
+DROP TABLE cartao_fidelidade;
 DROP TABLE pedido;
 DROP TABLE realizacao;
 DROP TABLE contem;
 DROP TABLE armazena;
 
-CREATE TABLE Pessoa(
+CREATE TABLE pessoa(
     cpf VARCHAR2(14) NOT NULL,
     nome_completo VARCHAR2(40) NOT NULL,
     telefone VARCHAR2(15),
