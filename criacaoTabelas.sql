@@ -14,7 +14,7 @@ DROP TABLE armazena;
 CREATE TABLE Pessoa(
     cpf VARCHAR2(14) NOT NULL,
     nome_completo VARCHAR2(40) NOT NULL,
-    telefone VARCHAR2(12),
+    telefone VARCHAR2(15),
     data_nascimento DATE NOT NULL,
     cep VARCHAR2(7) NOT NULL, 
     logradouro VARCHAR2(40) NOT NULL, 
