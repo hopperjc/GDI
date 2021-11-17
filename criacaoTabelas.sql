@@ -58,7 +58,8 @@ CREATE TABLE produto(
     preco NUMBER NOT NULL,
     id_estoque_produto NUMBER NOT NULL,
     CONSTRAINT produto_pk PRIMARY KEY (id_produto),
-    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque_produto) REFERENCES estoque(id_estoque)
+    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque_produto) REFERENCES estoque(id_estoque),
+    CONSTRAINT produto_preco_check CHECK (preco >= 00.01)
 );
 
 CREATE TABLE promocao(
