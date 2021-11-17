@@ -27,7 +27,8 @@ CREATE TABLE pessoa(
 CREATE TABLE cargo(
     nome_cargo VARCHAR2(20) NOT NULL,
     salario NUMBER NOT NULL,
-    CONSTRAINT cargo_pk PRIMARY KEY (nome_cargo)
+    CONSTRAINT cargo_pk PRIMARY KEY (nome_cargo),
+    CONSTRAINT cargo_salario_minimo_check CHECK (salario >= 1100.00)
 );
 
 CREATE TABLE funcionario(
