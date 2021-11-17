@@ -26,12 +26,12 @@ CREATE TABLE Pessoa(
 
 CREATE TABLE cargo(
     nome_cargo VARCHAR2(20) NOT NULL,
-    salario NUMBER NOT NULL
+    salario NUMBER NOT NULL,
     CONSTRAINT cargo_pk PRIMARY KEY (nome_cargo)
 );
 
 CREATE TABLE funcionario(
-    cpf_funcionario(14) NOT NULL,
+    cpf_funcionario VARCHAR2(14) NOT NULL,
     supervisor VARCHAR2(14),
     cargo VARCHAR2(20) NOT NULL,
     CONSTRAINT funcionario_pk PRIMARY KEY (cpf_funcionario),
@@ -56,9 +56,9 @@ CREATE TABLE produto(
     nome VARCHAR2(20) NOT NULL,
     categoria VARCHAR2(20) NOT NULL,
     preco NUMBER NOT NULL,
-    id_estoque NUMBER NOT NULL,
+    id_estoque_produto NUMBER NOT NULL,
     CONSTRAINT produto_pk PRIMARY KEY (id_produto),
-    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque) REFERENCES estoque(id_estoque)
+    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque_produto) REFERENCES estoque(id_estoque)
 );
 
 CREATE TABLE promocao(
@@ -71,19 +71,23 @@ CREATE TABLE promocao(
 CREATE TABLE cartao_fidelidade(
     data_emicao DATE NOT NULL,
     cpf_cliente VARCHAR2(14) NOT NULL, 
-    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emicao, id_cliente)
+    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emicao, cpf_cliente)
 );
 
 CREATE TABLE pedido(
     id_pedido NUMBER NOT NULL, 
     data_pedido DATE NOT NULL,
     cpf_funcionario_pedido VARCHAR2(14) NOT NULL,
-    cpf_cliente_pedido VARCHAR2(14) NOT NULL
+    cpf_cliente_pedido VARCHAR2(14) NOT NULL,
+    CONSTRAINT pedido_pk PRIMARY KEY (id_pedido),
+    CONSTRAINT pedido_funcionario_fk FOREIGN KEY (cpf_funcionario_pedido) REFERENCES funcionario(cpf_funcionario),
+    CONSTRAINT pedifo_client_fk FOREIGN KEY (cpf_cliente_pedido) REFERENCES cliente(cpf_cliente)
 );
 
 CREATE TABLE realizacao(
     id_pedido_realizacao NUMBER NOT NULL, 
     codigo_promocional_realizacao NUMBER NOT NULL,
+    CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, codigo_promocional_realizacao)
     CONSTRAINT id_pedido_fk FOREIGN KEY (id_pedido_realizacao) REFERENCES pedido(id_pedido),
     CONSTRAINT cdg_pomocional_fk FOREIGN KEY (codigo_promocional_realizacao) REFERENCES promocao(codigo_promocional)
 );
@@ -92,6 +96,7 @@ CREATE TABLE contem(
     id_pedido_contem NUMBER NOT NULL,
     id_produto_contem NUMBER NOT NULL,
     quantidade NUMBER,
+    CONSTRAINT contem_pk(id_pedido_contem, id_produto_contem),
     CONSTRAINT contem_pedido_fk FOREIGN KEY (id_pedido_contem) REFERENCES pedido(id_pedido),
     CONSTRAINT contem_produto_fk FOREIGN KEY (id_produto_contem) REFERENCES produto(id_produto)
 );
@@ -101,7 +106,7 @@ CREATE TABLE armazena(
     id_produto_armazena NUMBER NOT NULL,
     id_estoque_armazena NUMBER NOT NULL,
     cpf_funcionario_armazena VARCHAR2(14) NOT NULL,
-    CONSTRAINT armazena PRIMARY KEY (data_armazenagem),
+    CONSTRAINT armazena_pk PRIMARY KEY (data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena),
     CONSTRAINT armazena_produto_fk FOREIGN KEY (id_produto_armazena) REFERENCES produto(id_produto),
     CONSTRAINT armazena_estoque_fk FOREIGN KEY (id_estoque_armazena) REFERENCES estoque(id_estoque),
     CONSTRAINT armazena_funcionario_fk FOREIGN KEY (cpf_funcionario_armazena) REFERENCES funcionario(cpf_funcionario)
