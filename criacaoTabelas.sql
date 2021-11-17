@@ -69,9 +69,9 @@ CREATE TABLE promocao(
 );
 
 CREATE TABLE cartao_fidelidade(
-    data_emicao DATE NOT NULL,
+    data_emissao DATE NOT NULL,
     cpf_cliente_cf VARCHAR2(14) NOT NULL, 
-    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emicao, cpf_cliente_cf)
+    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emissao, cpf_cliente_cf)
 );
 
 CREATE TABLE pedido(
