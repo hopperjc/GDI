@@ -58,8 +58,7 @@ CREATE TABLE produto(
     preco NUMBER NOT NULL,
     id_estoque_produto NUMBER NOT NULL,
     CONSTRAINT produto_pk PRIMARY KEY (id_produto),
-    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque_produto) REFERENCES estoque(id_estoque),
-    CONSTRAINT produto_preco_check CHECK (preco >= 00.01)
+    CONSTRAINT produto_estoque_fk FOREIGN KEY (id_estoque_produto) REFERENCES estoque(id_estoque)
 );
 
 CREATE TABLE promocao(
@@ -112,3 +111,9 @@ CREATE TABLE armazena(
     CONSTRAINT armazena_estoque_fk FOREIGN KEY (id_estoque_armazena) REFERENCES estoque(id_estoque),
     CONSTRAINT armazena_funcionario_fk FOREIGN KEY (cpf_funcionario_armazena) REFERENCES funcionario(cpf_funcionario)
 );
+
+ALTER TABLE produto ADD (
+    CONSTRAINT produto_preco_check CHECK (preco >= 00.01)
+);
+
+CREATE SEQUENCE seq_id_estoque INCREMENT BY 1 START WITH 1;

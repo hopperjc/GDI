@@ -32,13 +32,13 @@ INSERT INTO cliente(cpf_cliente, data_cadastro) VALUES ('666.777.888-99', to_dat
 
 INSERT INTO cliente(cpf_cliente, data_cadastro) VALUES ('777.888.999-00', to_date('13/11/2021', 'dd/mm/yy'));
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (1, 120);
+INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 120);
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (2, 300);
+INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 300);
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (3, 260);
+INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 260);
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (4, 200);
+INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 200);
 
 INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (1, 'chocolate', 'doce', 5.00, 1);
 
