@@ -19,7 +19,7 @@ CREATE TABLE Pessoa(
     cep VARCHAR2(9) NOT NULL, 
     logradouro VARCHAR2(40) NOT NULL, 
     numero NUMBER NOT NULL, 
-    complemento VARCHAR2(15) NOT NULL,
+    complemento VARCHAR2(20) NOT NULL,
     bairro VARCHAR2(20) NOT NULL,
     CONSTRAINT pessoa_pk PRIMARY KEY (cpf)
 );
@@ -70,8 +70,8 @@ CREATE TABLE promocao(
 
 CREATE TABLE cartao_fidelidade(
     data_emicao DATE NOT NULL,
-    cpf_cliente VARCHAR2(14) NOT NULL, 
-    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emicao, cpf_cliente)
+    cpf_cliente_cf VARCHAR2(14) NOT NULL, 
+    CONSTRAINT cartao_fidelidade_pk PRIMARY KEY (data_emicao, cpf_cliente_cf)
 );
 
 CREATE TABLE pedido(
