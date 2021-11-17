@@ -16,7 +16,7 @@ CREATE TABLE Pessoa(
     nome_completo VARCHAR2(40) NOT NULL,
     telefone VARCHAR2(15),
     data_nascimento DATE NOT NULL,
-    cep VARCHAR2(7) NOT NULL, 
+    cep VARCHAR2(9) NOT NULL, 
     logradouro VARCHAR2(40) NOT NULL, 
     numero NUMBER NOT NULL, 
     complemento VARCHAR2(15) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE pedido(
 
 CREATE TABLE realizacao(
     id_pedido_realizacao NUMBER NOT NULL, 
-    codigo_promocional_realizacao NUMBER NOT NULL,
+    codigo_promocional_realizacao NUMBER,
     CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, codigo_promocional_realizacao),
     CONSTRAINT id_pedido_fk FOREIGN KEY (id_pedido_realizacao) REFERENCES pedido(id_pedido),
     CONSTRAINT cdg_pomocional_fk FOREIGN KEY (codigo_promocional_realizacao) REFERENCES promocao(codigo_promocional)
