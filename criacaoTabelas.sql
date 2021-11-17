@@ -87,7 +87,7 @@ CREATE TABLE pedido(
 CREATE TABLE realizacao(
     id_pedido_realizacao NUMBER NOT NULL, 
     codigo_promocional_realizacao NUMBER NOT NULL,
-    CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, codigo_promocional_realizacao)
+    CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, codigo_promocional_realizacao),
     CONSTRAINT id_pedido_fk FOREIGN KEY (id_pedido_realizacao) REFERENCES pedido(id_pedido),
     CONSTRAINT cdg_pomocional_fk FOREIGN KEY (codigo_promocional_realizacao) REFERENCES promocao(codigo_promocional)
 );
@@ -96,7 +96,7 @@ CREATE TABLE contem(
     id_pedido_contem NUMBER NOT NULL,
     id_produto_contem NUMBER NOT NULL,
     quantidade NUMBER,
-    CONSTRAINT contem_pk(id_pedido_contem, id_produto_contem),
+    CONSTRAINT contem_pk PRIMARY KEY (id_pedido_contem, id_produto_contem),
     CONSTRAINT contem_pedido_fk FOREIGN KEY (id_pedido_contem) REFERENCES pedido(id_pedido),
     CONSTRAINT contem_produto_fk FOREIGN KEY (id_produto_contem) REFERENCES produto(id_produto)
 );
