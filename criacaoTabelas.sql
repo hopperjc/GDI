@@ -117,3 +117,5 @@ ALTER TABLE produto ADD (
 );
 
 CREATE SEQUENCE seq_id_estoque INCREMENT BY 1 START WITH 1;
+
+CREATE INDEX indice_produto_preco ON produto(preco);
