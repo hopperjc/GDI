@@ -76,13 +76,13 @@ INSERT INTO promocao(codigo_promocional, valor_desconto, data_termino) VALUES (0
 
 INSERT INTO promocao(codigo_promocional, valor_desconto, data_termino) VALUES (02, 0.20, to_date('26/12/2021', 'dd/mm/yy'));
 
-INSERT INTO cartao_fidelidade(data_emicao, cpf_cliente_cf) VALUES (to_date('05/07/2020', 'dd/mm/yy'), '444.555.666-77');
+INSERT INTO cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('05/07/2020', 'dd/mm/yy'), '444.555.666-77');
 
-INSERT INTO cartao_fidelidade(data_emicao, cpf_cliente_cf) VALUES (to_date('08/10/2020', 'dd/mm/yy'), '555.666.777-88');
+INSERT INTO cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('08/10/2020', 'dd/mm/yy'), '555.666.777-88');
 
-INSERT INTO cartao_fidelidade(data_emicao, cpf_cliente_cf) VALUES (to_date('25/05/2021', 'dd/mm/yy'), '666.777.888-99');
+INSERT INTO cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('25/05/2021', 'dd/mm/yy'), '666.777.888-99');
 
-INSERT INTO cartao_fidelidade(data_emicao, cpf_cliente_cf) VALUES (to_date('13/11/2021', 'dd/mm/yy'), '777.888.999-00');
+INSERT INTO cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('13/11/2021', 'dd/mm/yy'), '777.888.999-00');
 
 INSERT INTO pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (1, to_date('05/07/2020', 'dd/mm/yy'), '333.444.555-66', '444.555.666-77');
 
