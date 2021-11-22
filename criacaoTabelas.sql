@@ -1,4 +1,5 @@
 DROP TABLE pessoa;
+DROP TABLE telefone;
 DROP TABLE cargo;
 DROP TABLE funcionario;
 DROP TABLE cliente;
@@ -14,7 +15,6 @@ DROP TABLE armazena;
 CREATE TABLE pessoa(
     cpf VARCHAR2(14) NOT NULL,
     nome_completo VARCHAR2(40) NOT NULL,
-    telefone VARCHAR2(15),
     data_nascimento DATE NOT NULL,
     cep VARCHAR2(9) NOT NULL, 
     logradouro VARCHAR2(40) NOT NULL, 
@@ -24,10 +24,18 @@ CREATE TABLE pessoa(
     CONSTRAINT pessoa_pk PRIMARY KEY (cpf)
 );
 
+CREATE TABLE telefone(
+    cpf_pessoa_telefone VARCHAR(14) NOT NULL,
+    ddd NUMBER,
+    numero NUMBER,
+    CONSTRAINT telefone_pf PRIMARY KEY (cpf_pessoa_telefone)
+);
+
 CREATE TABLE cargo(
+    id_cargo NUMBER NOT NULL,
     nome_cargo VARCHAR2(20) NOT NULL,
     salario NUMBER NOT NULL,
-    CONSTRAINT cargo_pk PRIMARY KEY (nome_cargo),
+    CONSTRAINT cargo_pk PRIMARY KEY (id_cargo),
     CONSTRAINT cargo_salario_minimo_check CHECK (salario >= 1100.00)
 );
 
@@ -36,7 +44,7 @@ CREATE TABLE funcionario(
     supervisor VARCHAR2(14),
     cargo VARCHAR2(20) NOT NULL,
     CONSTRAINT funcionario_pk PRIMARY KEY (cpf_funcionario),
-    CONSTRAINT funcionario_cargo_fk FOREIGN KEY (cargo) REFERENCES cargo(nome_cargo),
+    CONSTRAINT funcionario_cargo_fk FOREIGN KEY (cargo) REFERENCES cargo(id_cargo),
     CONSTRAINT funcionario_supervisor_fk FOREIGN KEY (supervisor) REFERENCES funcionario(cpf_funcionario)
 );
 
@@ -49,6 +57,7 @@ CREATE TABLE cliente(
 CREATE TABLE estoque(
     id_estoque NUMBER NOT NULL,
     qtd_produtos NUMBER,
+    status_estoque VARCHAR(20),
     CONSTRAINT estoque_pk PRIMARY KEY (id_estoque)
 );
 

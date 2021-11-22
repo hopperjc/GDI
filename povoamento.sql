@@ -12,17 +12,31 @@ INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradour
 
 INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('777.888.999-00', 'Maria Augusta Neto', '(81) 99595-9595', to_date('01/10/1996', 'dd/mm/yy'), '66666-676', 'Avenida João Gomes', 7890, 'apt. 305', 'esquina');
 
-INSERT INTO cargo(nome_cargo, salario) VALUES ('Gerente', 6000);
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('111.222.333.44', 81, 989898989);
 
-INSERT INTO cargo(nome_cargo, salario) VALUES ('Caixa', 2000);
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('222.333.444-55', 81, 987878787);
 
-INSERT INTO cargo(nome_cargo, salario) VALUES ('Lojista', 4000);
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('333.444.555-66', 81, 976767676);
 
-INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('111.222.333.44', null, 'Gerente');
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('444.555.666-77', 81, 998989898);
 
-INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('222.333.444-55', '111.222.333.44', 'Lojista');
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('555.666.777-88', 81, 997979797);
 
-INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('333.444.555-66', '111.222.333.44', 'Caixa');
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('666.777.888-99', 81, 996969696);
+
+INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('777.888.999-00', 81, 995959595);
+
+INSERT INTO cargo(id_cargo, nome_cargo, salario) VALUES (01, 'Gerente', 6000);
+
+INSERT INTO cargo(id_cargo, nome_cargo, salario) VALUES (02, 'Caixa', 2000);
+
+INSERT INTO cargo(id_cargo, nome_cargo, salario) VALUES (03, 'Lojista', 4000);
+
+INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('111.222.333.44', null, 01);
+
+INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('222.333.444-55', '111.222.333.44', 03);
+
+INSERT INTO funcionario(cpf_funcionario, supervisor, cargo) VALUES ('333.444.555-66', '111.222.333.44', 02);
 
 INSERT INTO cliente(cpf_cliente, data_cadastro) VALUES ('444.555.666-77', to_date('05/07/2020', 'dd/mm/yy'));
 
@@ -32,13 +46,15 @@ INSERT INTO cliente(cpf_cliente, data_cadastro) VALUES ('666.777.888-99', to_dat
 
 INSERT INTO cliente(cpf_cliente, data_cadastro) VALUES ('777.888.999-00', to_date('13/11/2021', 'dd/mm/yy'));
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 120);
+INSERT INTO estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 120, 'Com espaço');
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 300);
+INSERT INTO estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 300, 'Cheio');
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 260);
+INSERT INTO estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 260, 'Com espaço');
 
-INSERT INTO estoque(id_estoque, qtd_produtos) VALUES (seq_id_estoque.nextval, 200);
+INSERT INTO estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 200, 'Cheio');
+
+INSERT INTO estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 00, 'Vazio');
 
 INSERT INTO produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (1, 'chocolate', 'doce', 5.00, 1);
 
