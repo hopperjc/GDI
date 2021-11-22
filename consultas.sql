@@ -1,6 +1,16 @@
--- SELECT FROM WHERE
--- INNER JOIN
--- ORDER BY
+-- COUNT OK
+-- SUBCONSULTA COM OPERADOR RELACIONAL OK
+-- MIN OK
+-- AVG OK
+-- GROUP BY OK 
+-- MAX OK 
+-- LIKE OK 
+-- ORDER BY OK
+-- SELECT FROM WHERE OK
+-- INNER JOIN OK
+-- BETWEEN OK
+
+
 -- Consulta sobre a quantidade de produtos 
 -- que a cliente 'Maria Augusta' levou ao 
 -- realizar um pedido na loja e o total pago 
@@ -19,20 +29,73 @@ FROM pessoa p
         ON c.id_produto_contem = pr.id_produto
 WHERE p.nome_completo = 'Maria Augusta';
 
+-- Mostre o nome, categoria e preço dos
+-- produtos comprados por 'Maria Augusta Neto'
+-- ordenados pelo preço.
+SELECT pr.nome, pr.categoria, pr.preco
+FROM pessoa p
+    INNER JOIN cliente cl
+        ON p.cpf = cl.cpf_cliente
+    INNER JOIN  realizacao r
+        ON cl.cpf_cliente = r.cpf_cliente_realizacao
+    INNER JOIN  pedido pe
+        ON r.id_pedido_realizacao = pe.id_pedido
+    INNER JOIN contem c
+        ON pe.id_pedido = c.id_pedido_contem
+    INNER JOIN produto pr
+        ON c.id_produto_contem = pr.id_produto
+WHERE p.nome_completo = 'Maria Augusta Neto'
+ORDER BY pr.preco;
 
--- BETWEEN
--- LIKE 
+-- Mostre o nome completo de todos os funcionários com 
+-- salário entre 2000 e 5000 reais e os seus respectivos cargos
+SELECT p.nome_completo, c.nome_cargo
+FROM pessoa p
+    INNER JOIN funcionario f
+        ON p.cpf = f.cpf_funcionario
+    INNER JOIN cargo c
+        ON f.cargo = c.id_cargo
+WHERE c.salario BETWEEN 2000 AND 5000;
+
+-- Mostre o nome completo e o endereço das clientes 
+-- que possuem o nome Maria como primeiro nome.
+SELECT p.nome_completo, p.logradouro, p.numero, p.complemento, p.bairro, p.cep
+FROM pessoa p 
+WHERE p.nome_completo LIKE 'Maria%';
+
+-- Mostre o preço de todas as bebidas da loja 
+SELECT pr.nome, MAX(pr.preco)
+FROM produto pr
+WHERE pr.categoria = 'bebida'
+GROUP BY pr.nome;
+
+-- Mostre o nome e o cargo do funcionario com o menor salário
+SELECT p.nome_completo, c.nome_cargo
+FROM pessoa p
+    INNER JOIN funcionario f
+        ON p.cpf = f.cpf_funcionario
+    INNER JOIN cargo c
+        ON f.cargo = c.id_cargo
+WHERE c.salario = (SELECT MIN(salario) FROM cargo);
+
+-- Mostre os nomes e os preços dos produtos 
+-- mais caros que a média total dos preços 
+SELECT pr.nome, pr.preco
+FROM produto pr
+WHERE pr.preco > (SELECT AVG(pr.preco) FROM produto pr);
+
+-- Mostre quantos tipos de produtos existem na loja
+SELECT COUNT(id_produto), pr.preco
+FROM produto pr
+GROUP BY pr.categoria
+HAVING pr.preco > 10
+
+
 -- IS NULL ou IS NOT NULL
--- MAX
--- MIN
--- AVG
--- COUNT
 -- LEFT ou RIGHT ou FULL OUTER JOIN
--- SUBCONSULTA COM OPERADOR RELACIONAL
 -- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
--- GROUP BY
 -- HAVING
 -- UNION ou INTERSECT ou MINUS
 -- CREATE VIEW
