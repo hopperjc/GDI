@@ -84,11 +84,11 @@ SELECT pr.nome, pr.preco
 FROM produto pr
 WHERE pr.preco > (SELECT AVG(pr.preco) FROM produto pr);
 
--- Mostre quantos tipos de produtos existem na loja
-SELECT COUNT(id_produto), pr.preco
-FROM produto pr
-GROUP BY pr.categoria
-HAVING pr.preco > 10
+-- Mostre quantidade de cada tipo de produto existente na loja
+SELECT categoria, COUNT(*)
+FROM produto 
+GROUP BY categoria
+HAVING  COUNT(*) > 0
 
 
 -- IS NULL ou IS NOT NULL
