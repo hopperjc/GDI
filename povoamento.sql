@@ -1,16 +1,16 @@
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('111.222.333.44', 'José da Silva', '(81) 98989-8989', to_date('01/01/1969', 'dd/mm/yy'), '00000-010', 'Rua da esquina', 123, 'apt. 1', 'esquina');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('111.222.333.44', 'José da Silva', to_date('01/01/1969', 'dd/mm/yy'), '00000-010', 'Rua da esquina', 123, 'apt. 1', 'esquina');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('222.333.444-55', 'Ana Sobral', '(81) 98787-8787', to_date('24/04/1987', 'dd/mm/yy'), '11111-121', 'Rua da entrada', 234, 'apt. 401', 'entrada');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('222.333.444-55', 'Ana Sobral', to_date('24/04/1987', 'dd/mm/yy'), '11111-121', 'Rua da entrada', 234, 'apt. 401', 'entrada');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('333.444.555-66', 'Lucas Cavalcanti', '(81) 97676-7676', to_date('14/03/1992', 'dd/mm/yy'), '22222-232', 'Rua da saida', 345, 'Casa 12', 'saida');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('333.444.555-66', 'Lucas Cavalcanti', to_date('14/03/1992', 'dd/mm/yy'), '22222-232', 'Rua da saida', 345, 'Casa 12', 'saida');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('444.555.666-77', 'Matheus Cabral', '(81) 99898-9898', to_date('08/09/1988', 'dd/mm/yy'), '33333-343', 'Avenida rosquinha', 456, 'Bloco 1 Apt. 201', 'rosquinha');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('444.555.666-77', 'Matheus Cabral', to_date('08/09/1988', 'dd/mm/yy'), '33333-343', 'Avenida rosquinha', 456, 'Bloco 1 Apt. 201', 'rosquinha');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('555.666.777-88', 'Maria Augusta', '(81) 99797-9797', to_date('19/08/1988', 'dd/mm/yy'), '44444-454', 'Rua do povo', 567, 'apt. 902', 'povo');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('555.666.777-88', 'Maria Augusta', to_date('19/08/1988', 'dd/mm/yy'), '44444-454', 'Rua do povo', 567, 'apt. 902', 'povo');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('666.777.888-99', 'José Conceição', '(81) 99696-9696', to_date('21/09/1997', 'dd/mm/yy'), '55555-565', 'Rua Fernando Antônio', 678, 'apt. 104', 'rosquinha');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('666.777.888-99', 'José Conceição', to_date('21/09/1997', 'dd/mm/yy'), '55555-565', 'Rua Fernando Antônio', 678, 'apt. 104', 'rosquinha');
 
-INSERT INTO pessoa(cpf, nome_completo, telefone, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('777.888.999-00', 'Maria Augusta Neto', '(81) 99595-9595', to_date('01/10/1996', 'dd/mm/yy'), '66666-676', 'Avenida João Gomes', 7890, 'apt. 305', 'esquina');
+INSERT INTO pessoa(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro) VALUES ('777.888.999-00', 'Maria Augusta Neto', to_date('01/10/1996', 'dd/mm/yy'), '66666-676', 'Avenida João Gomes', 7890, 'apt. 305', 'esquina');
 
 INSERT INTO telefone(cpf_pessoa_telefone, ddd, numero) VALUES ('111.222.333.44', 81, 989898989);
 
@@ -108,13 +108,13 @@ INSERT INTO pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_p
 
 INSERT INTO pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (4, to_date('13/11/2021', 'dd/mm/yy'), '333.444.555-66', '777.888.999-00');
 
-INSERT INTO realizacao(id_pedido_realizacao, codigo_promocional_realizacao) VALUES (1, 00);
+INSERT INTO realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES (1, '444.555.666-77', 00);
 
-INSERT INTO realizacao(id_pedido_realizacao, codigo_promocional_realizacao) VALUES (2, 01);
+INSERT INTO realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES (2, '555.666.777-88', 01);
 
-INSERT INTO realizacao(id_pedido_realizacao, codigo_promocional_realizacao) VALUES (3, 02);
+INSERT INTO realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES (3, '666.777.888-99', 02);
 
-INSERT INTO realizacao(id_pedido_realizacao, codigo_promocional_realizacao) VALUES (4, 00);
+INSERT INTO realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES (4, '777.888.999-00', 00);
 
 INSERT INTO contem(id_pedido_contem, id_produto_contem, quantidade) VALUES (1, 1, 2);
 

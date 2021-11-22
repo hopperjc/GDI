@@ -11,6 +11,8 @@ DROP TABLE pedido;
 DROP TABLE realizacao;
 DROP TABLE contem;
 DROP TABLE armazena;
+DROP SEQUENCE seq_id_estoque;
+DROP INDEX indice_produto_preco;
 
 CREATE TABLE pessoa(
     cpf VARCHAR2(14) NOT NULL,
@@ -42,7 +44,7 @@ CREATE TABLE cargo(
 CREATE TABLE funcionario(
     cpf_funcionario VARCHAR2(14) NOT NULL,
     supervisor VARCHAR2(14),
-    cargo VARCHAR2(20) NOT NULL,
+    cargo NUMBER NOT NULL,
     CONSTRAINT funcionario_pk PRIMARY KEY (cpf_funcionario),
     CONSTRAINT funcionario_cargo_fk FOREIGN KEY (cargo) REFERENCES cargo(id_cargo),
     CONSTRAINT funcionario_supervisor_fk FOREIGN KEY (supervisor) REFERENCES funcionario(cpf_funcionario)
@@ -95,9 +97,10 @@ CREATE TABLE pedido(
 );
 
 CREATE TABLE realizacao(
-    id_pedido_realizacao NUMBER NOT NULL, 
+    id_pedido_realizacao NUMBER NOT NULL,
+    cpf_cliente_realizacao VARCHAR2(14) NOT NULL,
     codigo_promocional_realizacao NUMBER,
-    CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, codigo_promocional_realizacao),
+    CONSTRAINT realizacao_pk PRIMARY KEY (id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao),
     CONSTRAINT id_pedido_fk FOREIGN KEY (id_pedido_realizacao) REFERENCES pedido(id_pedido),
     CONSTRAINT cdg_pomocional_fk FOREIGN KEY (codigo_promocional_realizacao) REFERENCES promocao(codigo_promocional)
 );
