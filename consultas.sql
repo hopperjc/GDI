@@ -103,7 +103,6 @@ WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoq
 
 
 -- LEFT ou RIGHT ou FULL OUTER JOIN
--- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
 -- UNION ou INTERSECT ou MINUS
