@@ -90,9 +90,13 @@ FROM produto
 GROUP BY categoria
 HAVING  COUNT(*) > 0
 
+-- Listar cpf e data de cadastro de todos os clientes e datas de suas respectivas compras, se houver
+SELECT c.data_cadastro, pe.data_pedido 
+FROM cliente c LEFT JOIN pedido pe
+ON c.cpf_cliente = pe.cpf_cliente_pedido
 
 -- IS NULL ou IS NOT NULL
--- LEFT ou RIGHT ou FULL OUTER JOIN
+-- LEFT ou RIGHT ou FULL OUTER JOIN - OK
 -- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
