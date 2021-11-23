@@ -135,6 +135,7 @@ SELECT pr.nome, pr.categoria
 FROM produto pr
 WHERE pr.preco = ANY (SELECT pr.preco FROM produto pr WHERE pr.preco > 10);
 
+-- Crie uma maneira de ver se um estoque está disponível
 CREATE VIEW estoque_de_produtos_disponiveis AS estoquesDisponivel
 SELECT p.nome, a.id_estoque_armazena
 FROM  produto p, armazena a
