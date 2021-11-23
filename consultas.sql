@@ -149,37 +149,120 @@ where e.status_estoque NOT LIKE 'Cheio';
 -- PL
 
 -- USO DE RECORD
-DECLARE 
-   cliente_rec cliente%rowtype; 
-BEGIN 
-   SELECT * INTO cliente_rec 
-   FROM cliente cl 
-   WHERE cl.nome_completo = 'José Conceição';  
-   dbms_output.put_line('CPF Cliente: ' || cliente_rec.cpf); 
-   dbms_output.put_line('Nome Cliente: ' || cliente_rec.nome_completo); 
-   dbms_output.put_line('Data de Nascimento Cliente: ' || cliente_rec.data_nascimento); 
-   dbms_output.put_line('CEP Cliente: ' || cliente_rec.cep); 
-   dbms_output.put_line('Logradouro Cliente: ' || cliente_rec.logradouro); 
-   dbms_output.put_line('Número Cliente: ' || cliente_rec.numero); 
-   dbms_output.put_line('Complemento Cliente: ' || )cliente_rec.complemento; 
-   dbms_output.put_line('Bairro Cliente: ' || cliente_rec.bairro); 
-END; 
 -- USO DE ESTRUTURA DE DADOS TIPO TABLE
 -- BLOCO ANÔNIMO
--- CREATE PROCEDURE
+-- CREATE PROCEDURE OK
 -- CREATE FUNCTION
 -- %TYPE
 -- %ROWTYPE
 -- IF ELSIF
--- CASE WHEN
--- LOOP EXIT WHEN
--- WHILE LOOP
--- FOR IN LOPP
--- SELECT.. INTO
--- CURSOR (OPEN, FETCH e CLOSE)
--- EXCEPTION WHEN
--- USO DE PARÂMETRO (IN, OUT ou IN OUT)
--- CREATE OR REPLACE PACKAGE
--- CREATE OR REPLACE BACKAGE BODY
+-- CASE WHEN OK
+-- LOOP EXIT WHEN OK
+-- WHILE LOOP 
+-- FOR IN LOPP 
+-- SELECT.. INTO OK
+-- CURSOR (OPEN, FETCH e CLOSE) 
+-- EXCEPTION WHEN OK
+-- USO DE PARÂMETRO (IN, OUT ou IN OUT) OK
+-- CREATE OR REPLACE PACKAGE OK
+-- CREATE OR REPLACE BACKAGE BODY OK
 -- CREATE OR REPLACE PACKAGE (COMANDO)
--- CREATE OR REPLACE PACKEGE (LINHA)
+-- CREATE OR REPLACE PACKEGE (LINHA) OK
+
+-- Trigger (linha) para verificação de preço dos produtos inseridos
+CREATE OR REPLACE TRIGGER prod_preco
+BEFORE UPDATE ON produto 
+FOR EACH ROW
+BEGIN
+    IF :NEW.preco < 0 THEN
+        RAISE_APPLICATION_ERROR(-20101, 'Preço do produto não pode ser menor que 0');
+    END IF;
+END;
+
+
+SELECT COUNT(*) INTO quantidade_prod FROM produto;
+
+-- Mostre a variedade de salgados que tem na loja
+CREATE OR REPLACE FUNCTION variedade_salgados RETURN INTEGER IS 
+retorno INTEGER;
+tipo produto.categoria%TYPE;
+BEGIN
+    WHILE quantidade > 0 LOOP
+        IF tipo = 'salgado' THEN
+            retorno := retorno + 1;
+        END IF;
+        quantidade := quantidade - 1;
+    END LOOP;
+    RETURN retorno;
+END;
+
+-- Recuperando as informações de gerente
+CREATE OR REPLACE PROCEDURE info_func_gerentes IS
+v_cpf_func funcionario.cpf_funcionario%TYPE;
+v_cpf_sup funcionario.supervisor%TYPE;
+v_cargo_func funcionario.cargo%TYPE := 01;
+
+CURSOR c_func IS
+SELECT cpf_funcionario, supervisor, cargo
+FROM funcionario
+WHERE cargo = v_cargo_func;
+
+BEGIN
+    OPEN c_func;
+    LOOP
+        FETCH c_func INTO v_cpf_func, v_cpf_sup, v_cargo_func;
+        EXIT WHEN c_func%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Funcionário: '|| ' ' ||
+        TO_CHAR(v_cpf_func) || ' ' || TO_CHAR(v_cpf_sup) || ' ' || TO_CHAR(v_cargo_func));
+    END LOOP;
+    CLOSE c_func;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        INSERT INTO log_table (info) VALUES ('Funcionário com cargo Gerente não existe!');
+END;
+
+-- Procedimento para aumentar o salário dos funcionários
+CREATE OR REPLACE PROCEDURE aumento_salario 
+(cargoNovo IN cargo.nome_cargo%TYPE) IS
+
+BEGIN
+    CASE cargoNovo
+    WHEN 'Gerente' THEN
+        UPDATE cargoNovo
+        SET salario = 10000
+        WHERE nome_cargo = 'Gerente'
+    WHEN 'Lojista' THEN
+        UPDATE cargoNovo
+        SET salario = 6000
+        WHERE nome_cargo = 'Logista';
+    WHEN 'Caixa' THEN
+        UPDATE cargoNovo
+        SET salario_cargo = 4000
+        WHERE nome_cargo = 'Caixa';
+    END CASE;
+END;
+
+--Declaração package para cadastro de cargos
+CREATE OR REPLACE PACKAGE funcionario_package AS
+CREATE OR REPLACE PROCEDURE insere_cargo (p_salario_cargo cargo.salario_cargo%TYPE, p_nome_cargo cargo.nome_cargo%TYPE);
+CREATE OR REPLACE PROCEDURE remove_cargo (p_nome_cargo IN cargo.nome_cargo%TYPE);
+END funcionario_package;
+
+--Definição package para cadastro de cargos
+CREATE OR REPLACE PACKAGE BODY funcionario_package AS
+CREATE OR REPLACE PROCEDURE insere_cargo (p_id_cargo cargo.id_Cargo%TYPE, p_salario_cargo cargo.salario%TYPE, p_nome_cargo cargo.nome_cargo%TYPE) IS
+BEGIN
+    INSERT INTO cargo (id_cargo, nome_cargo, salario_cargo) VALUES (p_id_cargo, p_nome_cargo, p_salario_cargo);
+COMMIT;
+END insere_cargo;
+
+CREATE OR REPLACE PROCEDURE remove_cargo (p_nome_cargo IN cargo.nome_cargo%TYPE) IS
+BEGIN
+    DELETE FROM cargo
+    WHERE nome_cargo = p_nome_cargo;
+    IF SQL%NOTFOUND THEN SQL%NOTFOUND THEN
+        INSERT INTO log_table (info) VALUES ('Cargo não existe!');
+    END IF;
+COMMIT;
+END remove_cargo;
+END funcionario_package;
