@@ -1,3 +1,4 @@
+-- IS NULL ou IS NOT NULL OK
 -- SUBCONSULTA COM IN OK
 -- SUBCONSULTA COM ALL OK
 -- UNION ou INTERSECT ou MINUS OK
@@ -97,18 +98,22 @@ HAVING  COUNT(*) > 0;
 
 -- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque 
 -- 3 emitidos um por funcionários supervisionados
-SELECT count(distinct id_pedido) as quantidade
+SELECT count(distinct id_pedido) AS quantidade
 FROM pedido pe
 INNER JOIN funcionario f
-    on f.cpf_funcionario = pe.cpf_funcionario_pedido
+    ON f.cpf_funcionario = pe.cpf_funcionario_pedido
 INNER JOIN contem c
-    on pe.id_pedido = c.id_pedido_contem
+    ON pe.id_pedido = c.id_pedido_contem
 INNER JOIN produto pr
-    on c.id_produto_contem = pr.id_produto
-WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoque_armazena = 3) and f.supervisor is not NULL;
+    ON c.id_produto_contem = pr.id_produto
+WHERE pr.id_produto IN (SELECT id_produto_armazena 
+                            FROM  armazena 
+                            WHERE id_estoque_armazena = 3)
+AND f.supervisor is not NULL;
 
 -- LEFT ou RIGHT ou FULL OUTER JOIN
--- Listar cpf e data de cadastro de todos os clientes e datas de suas respectivas compras, se houver
+-- Listar cpf e data de cadastro de todos os clientes 
+-- e datas de suas respectivas compras, se houver
 SELECT c.data_cadastro, pe.data_pedido 
 FROM cliente c 
     LEFT JOIN pedido pe
@@ -132,7 +137,6 @@ FROM pessoa p
         ON p.cpf == cl.cpf_cliente
 WHERE p.bairro = 'esquina'
 
--- IS NULL ou IS NOT NULL
 -- SUBCONSULTA COM ANY
 -- CREATE VIEW
 -- GRANT / REVOKE
