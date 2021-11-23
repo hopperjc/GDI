@@ -95,11 +95,14 @@ SELECT c.data_cadastro, pe.data_pedido
 FROM cliente c LEFT JOIN pedido pe
 ON c.cpf_cliente = pe.cpf_cliente_pedido
 
+-- Listar os produtos que são mais baratos do que qualquer bebida
+SELECT pr.nome FROM produto pr WHERE pr.preco < ALL (SELECT pr.preco FROM produto pr WHERE pr.categoria = 'bebida')
+
 -- IS NULL ou IS NOT NULL
 -- LEFT ou RIGHT ou FULL OUTER JOIN - OK
 -- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
--- SUBCONSULTA COM ALL
+-- SUBCONSULTA COM ALL - OK
 -- HAVING
 -- UNION ou INTERSECT ou MINUS
 -- CREATE VIEW
