@@ -1,3 +1,6 @@
+-- UNION ou INTERSECT ou MINUS OK
+-- HAVING OK
+-- LEFT ou RIGHT ou FULL OUTER JOIN OK
 -- COUNT OK
 -- SUBCONSULTA COM OPERADOR RELACIONAL OK
 -- MIN OK
@@ -96,12 +99,21 @@ FROM cliente c LEFT JOIN pedido pe
 ON c.cpf_cliente = pe.cpf_cliente_pedido
 
 -- IS NULL ou IS NOT NULL
--- LEFT ou RIGHT ou FULL OUTER JOIN - OK
 -- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
--- HAVING
--- UNION ou INTERSECT ou MINUS
+-- Mostre todos os funcionários e clientes que moram na rua da esquina
+SELECT p.nome_completo, p.logradouro
+FROM pessoa p
+    INNER JOIN funcionario f
+        ON p.cpf == f.cpf_funcionario
+WHERE p.bairro = 'esquina'
+UNION
+SELECT p.nome_completo, p.logradouro 
+FROM pessoa p
+    INNER JOIN cliente cl
+        ON p.cpf == cl.cpf_cliente
+WHERE p.bairro = 'esquina'
 -- CREATE VIEW
 -- GRANT / REVOKE
 -- USO DE RECORD
