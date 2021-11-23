@@ -19,11 +19,9 @@
 -- GROUP BY OK 
 -- HAVING OK
 -- UNION ou INTERSECT ou MINUS OK
+-- CREATE VIEW OK
 
--- Consulta sobre a quantidade de produtos 
--- que a cliente 'Maria Augusta' levou ao 
--- realizar um pedido na loja e o total pago 
--- pelos produtos. 
+-- Consulta sobre a quantidade de produtos que a cliente 'Maria Augusta' levou ao realizar um pedido na loja e o total pago pelos produtos. 
 SELECT SUM(quantidade) as quantidade, SUM(pr.preco) as preço
 FROM pessoa p 
     INNER JOIN cliente cl
@@ -38,9 +36,7 @@ FROM pessoa p
         ON c.id_produto_contem = pr.id_produto
 WHERE p.nome_completo = 'Maria Augusta';
 
--- Mostre o nome, categoria e preço dos
--- produtos comprados por 'Maria Augusta Neto'
--- ordenados pelo preço.
+-- Mostre o nome, categoria e preço dos produtos comprados por 'Maria Augusta Neto' ordenados pelo preço.
 SELECT pr.nome, pr.categoria, pr.preco
 FROM pessoa p
     INNER JOIN cliente cl
@@ -56,8 +52,7 @@ FROM pessoa p
 WHERE p.nome_completo = 'Maria Augusta Neto'
 ORDER BY pr.preco;
 
--- Mostre o nome completo de todos os funcionários com 
--- salário entre 2000 e 5000 reais e os seus respectivos cargos
+-- Mostre o nome completo de todos os funcionários com salário entre 2000 e 5000 reais e os seus respectivos cargos
 SELECT p.nome_completo, c.nome_cargo
 FROM pessoa p
     INNER JOIN funcionario f
@@ -66,8 +61,7 @@ FROM pessoa p
         ON f.cargo = c.id_cargo
 WHERE c.salario BETWEEN 2000 AND 5000;
 
--- Mostre o nome completo e o endereço das clientes 
--- que possuem o nome Maria como primeiro nome.
+-- Mostre o nome completo e o endereço das clientes que possuem o nome Maria como primeiro nome.
 SELECT p.nome_completo, p.logradouro, p.numero, p.complemento, p.bairro, p.cep
 FROM pessoa p 
 WHERE p.nome_completo LIKE 'Maria%';
@@ -87,8 +81,7 @@ FROM pessoa p
         ON f.cargo = c.id_cargo
 WHERE c.salario = (SELECT MIN(salario) FROM cargo);
 
--- Mostre os nomes e os preços dos produtos 
--- mais caros que a média total dos preços 
+-- Mostre os nomes e os preços dos produtos mais caros que a média total dos preços 
 SELECT pr.nome, pr.preco
 FROM produto pr
 WHERE pr.preco > (SELECT AVG(pr.preco) FROM produto pr);
@@ -99,8 +92,7 @@ FROM produto
 GROUP BY categoria
 HAVING  COUNT(*) > 0;
 
--- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque 
--- 3 emitidos um por funcionários supervisionados
+-- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque 3 emitidos um por funcionários supervisionados
 SELECT count(distinct id_pedido) AS quantidade
 FROM pedido pe
 INNER JOIN funcionario f
@@ -114,9 +106,7 @@ WHERE pr.id_produto IN (SELECT id_produto_armazena
                             WHERE id_estoque_armazena = 3)
 AND f.supervisor is not NULL;
 
--- LEFT ou RIGHT ou FULL OUTER JOIN
--- Listar cpf e data de cadastro de todos os clientes 
--- e datas de suas respectivas compras, se houver
+-- Listar cpf e data de cadastro de todos os clientes e datas de suas respectivas compras, se houver
 SELECT c.data_cadastro, pe.data_pedido 
 FROM cliente c 
     LEFT JOIN pedido pe
@@ -145,7 +135,7 @@ SELECT pr.nome, pr.categoria
 FROM produto pr
 WHERE pr.preco = ANY (SELECT pr.preco FROM produto pr WHERE pr.preco > 10);
 
-CREATE VIEW estoque_de_produtos_disponiveis AS 
+CREATE VIEW estoque_de_produtos_disponiveis AS estoquesDisponivel
 SELECT p.nome, a.id_estoque_armazena
 FROM  produto p, armazena a
     INNER JOIN estoque e
