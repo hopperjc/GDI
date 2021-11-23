@@ -145,7 +145,14 @@ SELECT pr.nome, pr.categoria
 FROM produto pr
 WHERE pr.preco = ANY (SELECT pr.preco FROM produto pr WHERE pr.preco > 10);
 
--- CREATE VIEW
+CREATE VIEW estoque_de_produtos_disponiveis AS 
+SELECT p.nome, a.id_estoque_armazena
+FROM  produto p, armazena a
+    INNER JOIN estoque e
+        on a.id_estoque_armazena = e.id_estoque
+where e.status_estoque NOT LIKE 'Cheio';
+
+
 -- GRANT / REVOKE
 
 -- PL
