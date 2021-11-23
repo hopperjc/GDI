@@ -90,16 +90,28 @@ FROM produto
 GROUP BY categoria
 HAVING  COUNT(*) > 0
 
+-- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque  3 emitidos um por funcionários supervisionados
+SELECT count(distinct id_pedido) as quantidade
+FROM pedido pe
+INNER JOIN funcionario f
+    on f.cpf_funcionario = pe.cpf_funcionario_pedido
+INNER JOIN contem c
+    on pe.id_pedido = c.id_pedido_contem
+INNER JOIN produto pr
+    on c.id_produto_contem = pr.id_produto
+WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoque_armazena = 3) and f.supervisor is not NULL
 
--- IS NULL ou IS NOT NULL
+
 -- LEFT ou RIGHT ou FULL OUTER JOIN
 -- SUBCONSULTA COM IN
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
--- HAVING
 -- UNION ou INTERSECT ou MINUS
 -- CREATE VIEW
 -- GRANT / REVOKE
+
+-- PL
+
 -- USO DE RECORD
 -- USO DE ESTRUTURA DE DADOS TIPO TABLE
 -- BLOCO ANÔNIMO
