@@ -101,8 +101,15 @@ INNER JOIN produto pr
     on c.id_produto_contem = pr.id_produto
 WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoque_armazena = 3) and f.supervisor is not NULL
 
-
 -- LEFT ou RIGHT ou FULL OUTER JOIN
+-- Listar cpf e data de cadastro de todos os clientes e datas de suas respectivas compras, se houver
+SELECT c.data_cadastro, pe.data_pedido 
+FROM cliente c LEFT JOIN pedido pe
+ON c.cpf_cliente = pe.cpf_cliente_pedido
+
+-- IS NULL ou IS NOT NULL - ok
+-- LEFT ou RIGHT ou FULL OUTER JOIN - OK
+-- SUBCONSULTA COM IN - ok
 -- SUBCONSULTA COM ANY
 -- SUBCONSULTA COM ALL
 -- UNION ou INTERSECT ou MINUS
