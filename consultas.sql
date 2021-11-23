@@ -14,8 +14,8 @@
 -- Consulta sobre a quantidade de produtos 
 -- que a cliente 'Maria Augusta' levou ao 
 -- realizar um pedido na loja e o total pago 
--- pelos produtos.
-SELECT SUM(quantidade), SUM(pr.preco)
+-- pelos produtos. 
+SELECT SUM(quantidade) as quantidade, SUM(pr.preco) as preço
 FROM pessoa p 
     INNER JOIN cliente cl
         ON p.cpf = cl.cpf_cliente
@@ -88,7 +88,7 @@ WHERE pr.preco > (SELECT AVG(pr.preco) FROM produto pr);
 SELECT categoria, COUNT(*)
 FROM produto 
 GROUP BY categoria
-HAVING  COUNT(*) > 0
+HAVING  COUNT(*) > 0;
 
 -- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque  3 emitidos um por funcionários supervisionados
 SELECT count(distinct id_pedido) as quantidade
@@ -99,13 +99,13 @@ INNER JOIN contem c
     on pe.id_pedido = c.id_pedido_contem
 INNER JOIN produto pr
     on c.id_produto_contem = pr.id_produto
-WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoque_armazena = 3) and f.supervisor is not NULL
+WHERE pr.id_produto in (SELECT id_produto_armazena FROM  armazena where id_estoque_armazena = 3) and f.supervisor is not NULL;
 
 -- LEFT ou RIGHT ou FULL OUTER JOIN
 -- Listar cpf e data de cadastro de todos os clientes e datas de suas respectivas compras, se houver
 SELECT c.data_cadastro, pe.data_pedido 
 FROM cliente c LEFT JOIN pedido pe
-ON c.cpf_cliente = pe.cpf_cliente_pedido
+ON c.cpf_cliente = pe.cpf_cliente_pedido;
 
 -- IS NULL ou IS NOT NULL - ok
 -- LEFT ou RIGHT ou FULL OUTER JOIN - OK
