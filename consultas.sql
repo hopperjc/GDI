@@ -1,3 +1,4 @@
+-- SUBCONSULTA COM ANY OK
 -- IS NULL ou IS NOT NULL OK
 -- SUBCONSULTA COM IN OK
 -- SUBCONSULTA COM ALL OK
@@ -135,15 +136,34 @@ SELECT p.nome_completo, p.logradouro
 FROM pessoa p
     INNER JOIN cliente cl
         ON p.cpf == cl.cpf_cliente
-WHERE p.bairro = 'esquina'
+WHERE p.bairro = 'esquina';
 
--- SUBCONSULTA COM ANY
+-- Mostre qualquer produto e sua categoria que valha mais de 10 reais
+SELECT pr.nome, pr.categoria
+FROM produto pr
+WHERE pr.preco = ANY (SELECT pr.preco FROM produto pr WHERE pr.preco > 10);
+
 -- CREATE VIEW
 -- GRANT / REVOKE
 
 -- PL
 
 -- USO DE RECORD
+DECLARE 
+   cliente_rec cliente%rowtype; 
+BEGIN 
+   SELECT * INTO cliente_rec 
+   FROM cliente cl 
+   WHERE cl.nome_completo = 'José Conceição';  
+   dbms_output.put_line('CPF Cliente: ' || cliente_rec.cpf); 
+   dbms_output.put_line('Nome Cliente: ' || cliente_rec.nome_completo); 
+   dbms_output.put_line('Data de Nascimento Cliente: ' || cliente_rec.data_nascimento); 
+   dbms_output.put_line('CEP Cliente: ' || cliente_rec.cep); 
+   dbms_output.put_line('Logradouro Cliente: ' || cliente_rec.logradouro); 
+   dbms_output.put_line('Número Cliente: ' || cliente_rec.numero); 
+   dbms_output.put_line('Complemento Cliente: ' || )cliente_rec.complemento; 
+   dbms_output.put_line('Bairro Cliente: ' || cliente_rec.bairro); 
+END; 
 -- USO DE ESTRUTURA DE DADOS TIPO TABLE
 -- BLOCO ANÔNIMO
 -- CREATE PROCEDURE
