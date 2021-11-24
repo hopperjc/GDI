@@ -93,7 +93,7 @@ GROUP BY categoria
 HAVING  COUNT(*) > 0;
 
 -- Mostrar a quantidade de pedidos que incluem produtos aramazenados no estoque 3 emitidos um por funcionários supervisionados
-SELECT count(distinct id_pedido) AS quantidade
+SELECT count(DISTINCT id_pedido) AS quantidade
 FROM pedido pe
 INNER JOIN funcionario f
     ON f.cpf_funcionario = pe.cpf_funcionario_pedido
@@ -243,13 +243,13 @@ BEGIN
 END;
 
 --Declaração package para cadastro de cargos
-CREATE OR REPLACE PACKAGE funcionario_package AS
+CREATE OR REPLACE PACKAGE funcionario_package AS cadastro_cargo
 CREATE OR REPLACE PROCEDURE insere_cargo (p_salario_cargo cargo.salario_cargo%TYPE, p_nome_cargo cargo.nome_cargo%TYPE);
 CREATE OR REPLACE PROCEDURE remove_cargo (p_nome_cargo IN cargo.nome_cargo%TYPE);
 END funcionario_package;
 
 --Definição package para cadastro de cargos
-CREATE OR REPLACE PACKAGE BODY funcionario_package AS
+CREATE OR REPLACE PACKAGE BODY funcionario_package AS cadastro_cargo
 CREATE OR REPLACE PROCEDURE insere_cargo (p_id_cargo cargo.id_Cargo%TYPE, p_salario_cargo cargo.salario%TYPE, p_nome_cargo cargo.nome_cargo%TYPE) IS
 BEGIN
     INSERT INTO cargo (id_cargo, nome_cargo, salario_cargo) VALUES (p_id_cargo, p_nome_cargo, p_salario_cargo);
