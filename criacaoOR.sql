@@ -6,7 +6,7 @@
 -- MAP MEMBER FUNCTION - OK MAS DUVIDOSO (MEIO SEM SEMTIDO)
 -- CONSTRUCTOR FUNCTION - OK
 -- OVERRIDING MEMBER - OK
--- FINAL MEMBER
+-- FINAL MEMBER - OK
 -- NOT INSTANTIABLE TYPE/MEMBER - OK
 -- HERANÇA DE TIPOS (UNDER/NOT FINAL) - OK
 -- ALTER TYPE - OK
@@ -19,20 +19,20 @@
 -- VARRAY - OK
 -- NESTED TABLE
 
-DROP TYPE tp_telefone;
-DROP TYPE tp_telefones;
-DROP TYPE tp_pessoa;
-DROP TYPE tp_cargo;
-DROP TYPE tp_funcionario;
-DROP TYPE tp_cliente;
-DROP TYPE tp_estoque;
-DROP TYPE tp_produto;
-DROP TYPE tp_promocao;
-DROP TYPE tp_cartao_fidelidade;
-DROP TYPE tp_pedido;
-DROP TYPE tp_realizacao;
-DROP TYPE tp_contem;
-DROP TYPE tp_armazena;
+-- DROP TYPE tp_telefone;
+-- DROP TYPE tp_telefones;
+-- DROP TYPE tp_pessoa;
+-- DROP TYPE tp_cargo;
+-- DROP TYPE tp_funcionario;
+-- DROP TYPE tp_cliente;
+-- DROP TYPE tp_estoque;
+-- DROP TYPE tp_produto;
+-- DROP TYPE tp_promocao;
+-- DROP TYPE tp_cartao_fidelidade;
+-- DROP TYPE tp_pedido;
+-- DROP TYPE tp_realizacao;
+-- DROP TYPE tp_contem;
+-- DROP TYPE tp_armazena;
 
 
 CREATE OR REPLACE TYPE tp_telefone AS OBJECT(
@@ -52,14 +52,15 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2
+    MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2,
     MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
-) NOT FINAL NOT INSTANTIABLE;
+) NOT FINAL;
 
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
 MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2 IS
 BEGIN
 RETURN P.nome_completo;
+END;
 END;
 
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
@@ -76,6 +77,7 @@ DBMS_OUTPUT.PUT_LINE('Número: '||to_char(P.numero));
 DBMS_OUTPUT.PUT_LINE('Complemento: '||P.complemento);
 DBMS_OUTPUT.PUT_LINE('Bairro: '||P.bairro);
 END;
+END;
 
 CREATE TABLE tb_pessoa OF tp_pessoa(
     cpf PRIMARY KEY
@@ -86,7 +88,7 @@ CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
     id_cargo NUMBER,
     nome_cargo VARCHAR2(20),
     salario NUMBER,
-    MEMBER FUNCTION salarioAnual RETURN NUMBER,
+    FINAL MEMBER FUNCTION salarioAnual RETURN NUMBER,
     ORDER MEMBER FUNCTION comparaSalario (X tp_cargo) RETURN INTEGER
 );
 
