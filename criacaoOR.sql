@@ -186,7 +186,7 @@ BEGIN
 DBMS_OUTPUT.PUT_LINE('Detalhes do pedido:');
 DBMS_OUTPUT.PUT_LINE('ID:'||to_char(id_pedido));
 DBMS_OUTPUT.PUT_LINE('Data que foi realizado: '||to_char(data_pedido));
-DBMS_OUTPUT.PUT_LINE('Funcionário que realizou o pedido: '||('SELECT para retornar o nome do funcionário através da referencia que foi passada'));
+DBMS_OUTPUT.PUT_LINE('Funcionário que realizou o pedido: '||('Utilizar DEREF para pegar o nome atrazes do alias '));
 DBMS_OUTPUT.PUT_LINE('Cliente que fez o pedido: '||('SELECT para retornar o nome do clientes através da referencia que foi passada'));
 END;
 
@@ -208,9 +208,9 @@ CREATE TABLE tb_realizacao OF tp_realizacao(
 );
 
 CREATE OR REPLACE TYPE tp_contem AS OBJECT(
+    quantidade NUMBER,
     id_pedido_contem REF tp_pedido,
-    id_produto_contem REF tp_produto,
-    quantidade NUMBER
+    id_produto_contem REF tp_produto
 );
 
 CREATE TABLE tb_contem OF tp_contem(
