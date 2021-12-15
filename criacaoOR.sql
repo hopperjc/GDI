@@ -200,7 +200,7 @@ CREATE OR REPLACE TYPE tp_cartao_fidelidade AS OBJECT(
 );
 
 CREATE TABLE tb_cartao_fidelidade OF tp_cartao_fidelidade(
-    cpf_cliente_cf scope is tp_cliente
+    cpf_cliente_cf scope is tb_cliente
 );
 
 CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
@@ -223,8 +223,8 @@ CREATE OR REPLACE TYPE tp_realizacao AS OBJECT (
 );
 
 CREATE TABLE tb_realizacao OF tp_realizacao(
-    id_pedido_realizacao SCOPE IS tp_pedido,
-    cpf_cliente_realizacao SCOPE IS tp_cliente
+    id_pedido_realizacao SCOPE IS tb_pedido,
+    cpf_cliente_realizacao SCOPE IS tb_cliente
 );
 
 CREATE OR REPLACE TYPE tp_contem AS OBJECT(
@@ -234,8 +234,8 @@ CREATE OR REPLACE TYPE tp_contem AS OBJECT(
 );
 
 CREATE TABLE tb_contem OF tp_contem(
-    id_pedido_contem SCOPE IS tp_pedido,
-    id_produto_contem SCOPE IS tp_pedido
+    id_pedido_contem SCOPE IS tb_pedido,
+    id_produto_contem SCOPE IS tb_produto
 );
 
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
@@ -244,7 +244,7 @@ CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     cpf_funcionario_armazena REF tp_funcionario
 );
 
-CREATE TABLE tb_armazena OF tp_armazena(
-    id_estoque_armazena SCOPE IS tp_estoque,
-    cpf_funcionario_armazena SCOPE IS tp_funcionario
+CREATE TABLE tb_contem OF tp_contem(
+    id_pedido_contem SCOPE IS tb_pedido,
+    id_produto_contem SCOPE IS tb_produto
 );
