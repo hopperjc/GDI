@@ -14,21 +14,10 @@ DROP TYPE tp_realizacao;
 DROP TYPE tp_contem;
 DROP TYPE tp_armazena;
 
-CREATE OR REPLACE TYPE tp_endereco AS OBJECT(
-    cep VARCHAR2(9), 
-    logradouro VARCHAR2(40), 
-    numero NUMBER, 
-    complemento VARCHAR2(20),
-    bairro VARCHAR2(20),
-);
-
-CREATE TABLE tb_endereco OF tp_endereco(
-    cep PRIMARY KEY
-    );
 
 CREATE OR REPLACE TYPE tp_telefone AS OBJECT(
     ddd NUMBER,
-    numero NUMBER,
+    numero NUMBER
 );
 
 CREATE OR REPLACE TYPE tp_telefones AS VARRAY(5) OF tp_telefone;
@@ -37,8 +26,12 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     cpf VARCHAR2(14),
     nome_completo VARCHAR2(40),
     data_nascimento DATE,
-    endereco tp_endereco,
-    telefones tp_telefones
+    telefones tp_telefones,
+    cep VARCHAR2(9), 
+    logradouro VARCHAR2(40), 
+    numero NUMBER, 
+    complemento VARCHAR2(20),
+    bairro VARCHAR2(20)
 ) NOT FINAL NOT INSTANTIABLE;
 
 
@@ -46,6 +39,8 @@ CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
     id_cargo NUMBER,
     nome_cargo VARCHAR2(20),
     salario NUMBER,
+    MEMBER FUNCTION salarioAnual RETURN NUMBER,
+    ORDER MEMBER FUNCTION comparaSalario (X tp_cargo) RETURN INTEGER
 );
 
 CREATE TABLE tb_cargo OF tp_cargo(
@@ -66,7 +61,8 @@ cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nas
 RETURN;
 END;
 
-CREATE TABLE tb_funcionario OF tp_funcionario();
+
+CREATE TABLE tb_funcionario OF tp_funcionario;
 
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
     data_cadastro DATE,
@@ -80,7 +76,7 @@ cpf := c1.cpf; nome_completo := c1.nome_completo; data_nascimento := c1.data_nas
 RETURN;
 END;
 
-CREATE TABLE tb_cliente OF tp_cliente();
+CREATE TABLE tb_cliente OF tp_cliente;
 
 CREATE OR REPLACE TYPE tp_estoque AS OBJECT(
     id_estoque NUMBER,
@@ -104,6 +100,14 @@ CREATE TABLE tb_produto OF tp_produto(
     id_produto PRIMARY KEY
 );
 
+create type body tp_estoque as
+   member procedure insert_estoque is
+   begin
+       insert into tb_estoque values (id_estoque);
+       commit;
+   end insert_estoque;
+end;
+
 CREATE OR REPLACE TYPE tp_promocao AS OBJECT(
     codigo_promocional NUMBER,
     valor_desconto NUMBER,
@@ -119,7 +123,7 @@ CREATE OR REPLACE TYPE tp_cartao_fidelidade AS OBJECT(
     cpf_cliente_cf REF tp_cliente
 );
 
-CREATE TABLE tb_cartao_fidelidade OF tp_cartao_fidelidade();
+CREATE TABLE tb_cartao_fidelidade OF tp_cartao_fidelidade;
 
 CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
     id_pedido NUMBER, 
@@ -146,7 +150,7 @@ CREATE OR REPLACE TYPE tp_contem AS OBJECT(
     quantidade NUMBER
 );
 
-CREATE TABLE tb_contem OF tp_contem();
+CREATE TABLE tb_contem OF tp_contem;
 
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     data_armazenagem DATE,
@@ -154,4 +158,4 @@ CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     cpf_funcionario_armazena REF tp_funcionario
 );
 
-CREATE TABLE tb_armazena OF tp_armazena();
+CREATE TABLE tb_armazena OF tp_armazena;
