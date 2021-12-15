@@ -5,7 +5,7 @@
 -- ORDER MEMBER FUNCTION - OK
 -- MAP MEMBER FUNCTION - OK MAS DUVIDOSO (MEIO SEM SEMTIDO)
 -- CONSTRUCTOR FUNCTION - OK
--- OVERRIDING MEMBER
+-- OVERRIDING MEMBER - OK
 -- FINAL MEMBER
 -- NOT INSTANTIABLE TYPE/MEMBER - OK
 -- HERANÇA DE TIPOS (UNDER/NOT FINAL) - OK
@@ -51,8 +51,31 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     logradouro VARCHAR2(40), 
     numero NUMBER, 
     complemento VARCHAR2(20),
-    bairro VARCHAR2(20)
+    bairro VARCHAR2(20),
+    MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2
+    MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
+
+CREATE OR REPLACE TYPE BODY tp_pessoa AS
+MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2 IS
+BEGIN
+RETURN P.nome_completo;
+END;
+
+CREATE OR REPLACE TYPE BODY tp_pessoa AS
+MEMBER PROCEDURE exibirDetalhesPedido (P tp_pessoa) IS
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
+DBMS_OUTPUT.PUT_LINE('CPF:'||P.cpf);
+DBMS_OUTPUT.PUT_LINE('Nome: '||P.nome_completo));
+DBMS_OUTPUT.PUT_LINE('Data de NAscimento: '||to_char(P.data_nascimento));
+DBMS_OUTPUT.PUT_LINE('Telefones: '||to_char(P.telefones));
+DBMS_OUTPUT.PUT_LINE('CEP: '||to_char(P.data_nascimento));
+DBMS_OUTPUT.PUT_LINE('Logradouro: '||P.logradouro);
+DBMS_OUTPUT.PUT_LINE('Número: '||to_char(P.numero));
+DBMS_OUTPUT.PUT_LINE('Complemento: '||P.complemento);
+DBMS_OUTPUT.PUT_LINE('Bairro: '||P.bairro);
+END;
 
 CREATE TABLE tb_pessoa OF tp_pessoa(
     cpf PRIMARY KEY
@@ -86,17 +109,23 @@ CREATE TABLE tb_cargo OF tp_cargo(
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
     CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
+    OVERRIDING MEMBER FUNCTION nomePessoa RETURN VARCHAR2 AS nomeFuncionario
 );
 
 ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor WITH ROWID REFERENCES tp_funcionario) CASCADE;
 
-CREATE OR REPLACE TYPE BODY tp_funcionario IS 
+CREATE OR REPLACE TYPE BODY tp_funcionario AS
 CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT IS
 BEGIN
 cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nascimento; endereco := f1.endereco; telefones := f1.telefones;
 RETURN;
 END;
 
+OVERRIDING MEMBER FUNCTION nomePessoa(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
+BEGIN
+RETURN f1.nome_completo;
+END;
+END;
 
 CREATE TABLE tb_funcionario OF tp_funcionario;
 
@@ -177,18 +206,7 @@ CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
     data_pedido DATE,
     cpf_funcionario_pedido REF tp_funcionario,
     cpf_cliente_pedido REF tp_cliente
-    MEMBER PROCEDURE exibirDetalhesPedido(F tp_pedido)
 );
-
-CREATE OR REPLACE TYPE BODY tp_pedido IS
-MEMBER PROCEDURE exibirDetalhesPedido (F tp_pedido) IS
-BEGIN
-DBMS_OUTPUT.PUT_LINE('Detalhes do pedido:');
-DBMS_OUTPUT.PUT_LINE('ID:'||to_char(id_pedido));
-DBMS_OUTPUT.PUT_LINE('Data que foi realizado: '||to_char(data_pedido));
-DBMS_OUTPUT.PUT_LINE('Funcionário que realizou o pedido: '||('Utilizar DEREF para pegar o nome atrazes do alias '));
-DBMS_OUTPUT.PUT_LINE('Cliente que fez o pedido: '||('SELECT para retornar o nome do clientes através da referencia que foi passada'));
-END;
 
 CREATE TABLE tb_pedido OF tp_pedido(
     id_pedido PRIMARY KEY,
