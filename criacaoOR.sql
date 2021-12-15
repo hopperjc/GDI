@@ -1,4 +1,24 @@
-DROP TYPE tp_endereco;
+-- CREATE OR REPLACE TYPE - OK
+-- CREATE OR REPLACE TYPE BODY - OK
+-- MEMBER PROCEDURE - OK
+-- MEMBER FUNCTION - OK
+-- ORDER MEMBER FUNCTION - OK
+-- MAP MEMBER FUNCTION - OK MAS DUVIDOSO (MEIO SEM SEMTIDO)
+-- CONSTRUCTOR FUNCTION - OK
+-- OVERRIDING MEMBER
+-- FINAL MEMBER
+-- NOT INSTANTIABLE TYPE/MEMBER - OK
+-- HERANÇA DE TIPOS (UNDER/NOT FINAL) - OK
+-- ALTER TYPE - OK
+-- CREATE TABLE OF - OK
+-- WITH ROWID REFERENCES - OK
+-- REF - OK
+-- SCOPE IS - OK
+-- INSERT INTO
+-- VALUE
+-- VARRAY - OK
+-- NESTED TABLE
+
 DROP TYPE tp_telefone;
 DROP TYPE tp_telefones;
 DROP TYPE tp_pessoa;
@@ -34,6 +54,10 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     bairro VARCHAR2(20)
 ) NOT FINAL NOT INSTANTIABLE;
 
+CREATE TABLE tb_pessoa OF tp_pessoa(
+    cpf PRIMARY KEY
+);
+
 
 CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
     id_cargo NUMBER,
@@ -42,6 +66,18 @@ CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
     MEMBER FUNCTION salarioAnual RETURN NUMBER,
     ORDER MEMBER FUNCTION comparaSalario (X tp_cargo) RETURN INTEGER
 );
+
+CREATE OR REPLACE TYPE BODY tp_cargo IS 
+MEMBER FUNCTION salarioAnual RETURN NUMBER IS 
+BEGIN
+RETURN salario *12;
+END;
+
+ORDER MEMBER FUNCTION comparaSalario(X tp_cargo) RETURN INTEGER IS
+BEGIN 
+RETURN SELF.salario - X.salario;
+END;
+END;
 
 CREATE TABLE tb_cargo OF tp_cargo(
     id_cargo PRIMARY KEY
@@ -52,9 +88,9 @@ CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
 );
 
-ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor REF tp_funcionario) CASCADE;
+ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor WITH ROWID REFERENCES tp_funcionario) CASCADE;
 
-CREATE OR REPLACE TYPE BODY tp_funcionario AS 
+CREATE OR REPLACE TYPE BODY tp_funcionario IS 
 CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT IS
 BEGIN
 cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nascimento; endereco := f1.endereco; telefones := f1.telefones;
@@ -111,8 +147,17 @@ end;
 CREATE OR REPLACE TYPE tp_promocao AS OBJECT(
     codigo_promocional NUMBER,
     valor_desconto NUMBER,
-    data_termino DATE
+    data_termino DATE,
+    MAP MEMBER FUNCTION promocaoTOnumber RETURN NUMBER
 );
+
+CREATE OR REPLACE TYPE BODY tp_promocao AS
+MAP MEMBER FUNCTION promocaoTOnumber RETURN INTEGER IS
+p NUMBER := codigo_promocional;
+BEGIN
+RETURN p;
+END;
+END;
 
 CREATE TABLE tb_promocao OF tp_promocao(
     codigo_promocional PRIMARY KEY
@@ -123,17 +168,32 @@ CREATE OR REPLACE TYPE tp_cartao_fidelidade AS OBJECT(
     cpf_cliente_cf REF tp_cliente
 );
 
-CREATE TABLE tb_cartao_fidelidade OF tp_cartao_fidelidade;
+CREATE TABLE tb_cartao_fidelidade OF tp_cartao_fidelidade(
+    cpf_cliente_cf scope is tp_cliente
+);
 
 CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
     id_pedido NUMBER, 
     data_pedido DATE,
     cpf_funcionario_pedido REF tp_funcionario,
     cpf_cliente_pedido REF tp_cliente
+    MEMBER PROCEDURE exibirDetalhesPedido(F tp_pedido)
 );
 
+CREATE OR REPLACE TYPE BODY tp_pedido IS
+MEMBER PROCEDURE exibirDetalhesPedido (F tp_pedido) IS
+BEGIN
+DBMS_OUTPUT.PUT_LINE('Detalhes do pedido:');
+DBMS_OUTPUT.PUT_LINE('ID:'||to_char(id_pedido));
+DBMS_OUTPUT.PUT_LINE('Data que foi realizado: '||to_char(data_pedido));
+DBMS_OUTPUT.PUT_LINE('Funcionário que realizou o pedido: '||('SELECT para retornar o nome do funcionário através da referencia que foi passada'));
+DBMS_OUTPUT.PUT_LINE('Cliente que fez o pedido: '||('SELECT para retornar o nome do clientes através da referencia que foi passada'));
+END;
+
 CREATE TABLE tb_pedido OF tp_pedido(
-    id_pedido PRIMARY KEY
+    id_pedido PRIMARY KEY,
+    cpf_funcionario_pedido SCOPE IS tb_funcionario,
+    cpf_cliente_pedido SCOPE IS tb_cliente
 );
 
 CREATE OR REPLACE TYPE tp_realizacao AS OBJECT (
@@ -142,7 +202,10 @@ CREATE OR REPLACE TYPE tp_realizacao AS OBJECT (
     codigo_promocional_realizacao NUMBER
 );
 
-CREATE TABLE tb_realizacao OF tp_realizacao();
+CREATE TABLE tb_realizacao OF tp_realizacao(
+    id_pedido_realizacao SCOPE IS tp_pedido,
+    cpf_cliente_realizacao SCOPE IS tp_cliente
+);
 
 CREATE OR REPLACE TYPE tp_contem AS OBJECT(
     id_pedido_contem REF tp_pedido,
@@ -150,7 +213,10 @@ CREATE OR REPLACE TYPE tp_contem AS OBJECT(
     quantidade NUMBER
 );
 
-CREATE TABLE tb_contem OF tp_contem;
+CREATE TABLE tb_contem OF tp_contem(
+    id_pedido_contem SCOPE IS tp_pedido,
+    id_produto_contem SCOPE IS tp_pedido
+);
 
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     data_armazenagem DATE,
@@ -158,4 +224,7 @@ CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     cpf_funcionario_armazena REF tp_funcionario
 );
 
-CREATE TABLE tb_armazena OF tp_armazena;
+CREATE TABLE tb_armazena OF tp_armazena(
+    id_estoque_armazena SCOPE IS tp_estoque,
+    cpf_funcionario_armazena SCOPE IS tp_funcionario
+);
