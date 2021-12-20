@@ -54,7 +54,7 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     bairro VARCHAR2(20),
     MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2,
     MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
-) NOT FINAL;
+) NOT FINAL NOT INSTANTIABLE;
 
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
 MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2 IS
@@ -243,6 +243,8 @@ CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     id_estoque_armazena REF tp_estoque,
     cpf_funcionario_armazena REF tp_funcionario
 );
+
+create table tb_armazena of tp_armazena;
 
 CREATE TABLE tb_contem OF tp_contem(
     id_pedido_contem SCOPE IS tb_pedido,
