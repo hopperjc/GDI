@@ -119,8 +119,7 @@ CREATE TABLE armazena(
     id_produto_armazena NUMBER NOT NULL,
     id_estoque_armazena NUMBER NOT NULL,
     cpf_funcionario_armazena VARCHAR2(14) NOT NULL,
-    CONSTRAINT armazena_pk PRIMARY KEY (data_armazenagem, id_produto_armazena, id_estoque_armazena, cpf_funcionario_armazena),
-    CONSTRAINT armazena_produto_fk FOREIGN KEY (id_produto_armazena) REFERENCES produto(id_produto),
+    CONSTRAINT armazena_pk PRIMARY KEY (data_armazenagem, id_estoque_armazena, cpf_funcionario_armazena),
     CONSTRAINT armazena_estoque_fk FOREIGN KEY (id_estoque_armazena) REFERENCES estoque(id_estoque),
     CONSTRAINT armazena_funcionario_fk FOREIGN KEY (cpf_funcionario_armazena) REFERENCES funcionario(cpf_funcionario)
 );
