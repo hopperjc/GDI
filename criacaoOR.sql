@@ -201,7 +201,7 @@ CREATE OR REPLACE TYPE tp_cartao_fidelidade AS OBJECT(
 CREATE TYPE tp_nt_cartao_fidelidade AS TABLE OF tp_cartao_fidelidade;
 /
 CREATE TABLE tb_lista_cartao_fidelidade_cliente(
-  cpf_cliente VARCHAR2(14),
+  cpf_cliente REF tp_cliente,
   lista_cartao_fidelidade tp_nt_cartao_fidelidade  
 ) NESTED TABLE lista_cartao_fidelidade STORE AS  tb_lista_cartao_fidelidade;
 /
