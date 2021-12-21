@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     bairro VARCHAR2(20),
     MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2,
     MEMBER FUNCTION exibirEndereco(cep  VARCHAR2, logradouro  VARCHAR2, numero  NUMBER, complemento  VARCHAR2, bairro  VARCHAR2) RETURN VARCHAR2,
-    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) FINAL
+    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
