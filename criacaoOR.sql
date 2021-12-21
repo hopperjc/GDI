@@ -52,19 +52,19 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirDtalhes(P tp_pessoa) RETURN VARCHAR2,
     MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-MEMBER FUNCTION nomePessoa(P tp_pessoa) RETURN VARCHAR2 IS
+MEMBER FUNCTION exibirDtalhes(P tp pessoa) RETURN VARCHAR2 IS
 BEGIN
-RETURN P.nome_completo;
+RETURN detalhesPessoa(P);
 END;
 END;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-MEMBER PROCEDURE exibirDetalhesPedido (P tp_pessoa) IS
+MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) IS
 BEGIN
 DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
 DBMS_OUTPUT.PUT_LINE('CPF:'||P.cpf);
@@ -111,7 +111,7 @@ CREATE TABLE tb_cargo OF tp_cargo(
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
     CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
-    OVERRIDING MEMBER FUNCTION nomePessoa RETURN VARCHAR2 AS nomeFuncionario
+    OVERRIDING MEMBER FUNCTION exibirDetalhesPessoa(f1 tp_pessoa) RETURN VARCHAR2 
 );
 /
 ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor WITH ROWID REFERENCES tp_funcionario) CASCADE;
@@ -125,7 +125,8 @@ END;
 /
 OVERRIDING MEMBER FUNCTION nomePessoa(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
 BEGIN
-RETURN f1.nome_completo;
+RETURN f1.exibirDtalhes(f1);
+DBMS_OUTPUT.PUT_LINE('Cargo: '||P.cargo);
 END;
 END;
 /
