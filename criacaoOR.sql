@@ -1,40 +1,3 @@
--- CREATE OR REPLACE TYPE - OK
--- CREATE OR REPLACE TYPE BODY - OK
--- MEMBER PROCEDURE - OK
--- MEMBER FUNCTION - OK
--- ORDER MEMBER FUNCTION - OK
--- MAP MEMBER FUNCTION - OK MAS DUVIDOSO (MEIO SEM SEMTIDO)
--- CONSTRUCTOR FUNCTION - OK
--- OVERRIDING MEMBER - OK
--- FINAL MEMBER - OK
--- NOT INSTANTIABLE TYPE/MEMBER - OK
--- HERANÇA DE TIPOS (UNDER/NOT FINAL) - OK
--- ALTER TYPE - OK
--- CREATE TABLE OF - OK
--- WITH ROWID REFERENCES - OK
--- REF - OK
--- SCOPE IS - OK
--- INSERT INTO
--- VALUE - OK
--- VARRAY - OK
--- NESTED TABLE - OK
-
--- DROP TYPE tp_telefone;
--- DROP TYPE tp_telefones;
--- DROP TYPE tp_pessoa;
--- DROP TYPE tp_cargo;
--- DROP TYPE tp_funcionario;
--- DROP TYPE tp_cliente;
--- DROP TYPE tp_estoque;
--- DROP TYPE tp_produto;
--- DROP TYPE tp_promocao;
--- DROP TYPE tp_cartao_fidelidade;
--- DROP TYPE tp_pedido;
--- DROP TYPE tp_realizacao;
--- DROP TYPE tp_contem;
--- DROP TYPE tp_armazena;
-
-
 CREATE OR REPLACE TYPE tp_telefone AS OBJECT(
     ddd NUMBER,
     numero NUMBER
@@ -52,14 +15,14 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION exibirDtalhes(P tp_pessoa) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirDetalhes(P tp_pessoa) RETURN VARCHAR2,
     MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-MEMBER FUNCTION exibirDtalhes(P tp pessoa) RETURN VARCHAR2 IS
+MEMBER FUNCTION exibirDetalhes(P tp pessoa) RETURN VARCHAR2 IS
 BEGIN
-RETURN detalhesPessoa(P);
+RETURN '';
 END;
 END;
 /
@@ -78,10 +41,7 @@ DBMS_OUTPUT.PUT_LINE('Complemento: '||P.complemento);
 DBMS_OUTPUT.PUT_LINE('Bairro: '||P.bairro);
 END;
 END;
-/
-CREATE TABLE tb_pessoa OF tp_pessoa(
-    cpf PRIMARY KEY
-);
+
 /
 
 CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
@@ -97,7 +57,7 @@ MEMBER FUNCTION salarioAnual RETURN NUMBER IS
 BEGIN
 RETURN salario *12;
 END;
-/
+
 ORDER MEMBER FUNCTION comparaSalario(X tp_cargo) RETURN INTEGER IS
 BEGIN 
 RETURN SELF.salario - X.salario;
@@ -110,8 +70,8 @@ CREATE TABLE tb_cargo OF tp_cargo(
 /
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
-    CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
-    OVERRIDING MEMBER FUNCTION exibirDetalhesPessoa(f1 tp_pessoa) RETURN VARCHAR2 
+    CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT,
+    OVERRIDING MEMBER FUNCTION exibirDetalhes(f1 tp_funcionario) RETURN VARCHAR2 
 );
 /
 ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor WITH ROWID REFERENCES tp_funcionario) CASCADE;
@@ -122,11 +82,11 @@ BEGIN
 cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nascimento; endereco := f1.endereco; telefones := f1.telefones;
 RETURN;
 END;
-/
-OVERRIDING MEMBER FUNCTION nomePessoa(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
+
+OVERRIDING MEMBER FUNCTION exibirDetalhes(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
 BEGIN
-RETURN f1.exibirDtalhes(f1);
-DBMS_OUTPUT.PUT_LINE('Cargo: '||P.cargo);
+RETURN f1.exibirDetalhesPessoa(f1);
+DBMS_OUTPUT.PUT_LINE('Cargo: '||f1.cargo);
 END;
 END;
 /
@@ -160,8 +120,7 @@ CREATE OR REPLACE TYPE tp_produto AS OBJECT(
     id_produto NUMBER, 
     nome VARCHAR2(20),
     categoria VARCHAR2(20),
-    preco NUMBER,
-    id_estoque_produto REF tp_estoque
+    preco NUMBER
 );
 /
 CREATE TABLE tb_produto OF tp_produto(
@@ -248,7 +207,8 @@ CREATE TABLE tb_contem OF tp_contem(
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     data_armazenagem DATE,
     id_estoque_armazena REF tp_estoque,
-    cpf_funcionario_armazena REF tp_funcionario
+    cpf_funcionario_armazena REF tp_funcionario,
+    id_estoque_armazena REF tp_estoque
 );
 /
 create table tb_armazena of tp_armazena;

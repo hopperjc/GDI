@@ -28,21 +28,21 @@ INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_
 
 INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 00, 'Vazio');
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (2, 'pastilha', 'doce', 2.00, (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 1));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (2, 'pastilha', 'doce', 2.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (3, 'bombom', 'doce', (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 1));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (3, 'bombom', 'doce');
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (4, 'salgadinho', 'salgado', 4.00,(SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 1));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (4, 'salgadinho', 'salgado', 4.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (5, 'coxinha', 'salgado', 4.00, (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 1));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (5, 'coxinha', 'salgado', 4.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (6, 'empada', 'salgado', 4.00, (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 2));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (6, 'empada', 'salgado', 4.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (7, 'folhado', 'salgado', 5.00,(SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 2));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (7, 'folhado', 'salgado', 5.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (8, 'pão pizza', 'salgado', 6.00, (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 3));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (8, 'pão pizza', 'salgado', 6.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco, id_estoque_produto) VALUES (9, 'água', 'bebida', 3.00, (SELECT REF(e) FROM tb_estoque e WHERE e.id_estoque = 3));
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (9, 'água', 'bebida', 3.00);
 
 INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (00, 0, to_date('31/12/2022', 'dd/mm/yy'));
 
