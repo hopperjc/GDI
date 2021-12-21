@@ -16,7 +16,7 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
     MEMBER FUNCTION exibirDetalhes(P tp_pessoa) RETURN VARCHAR2,
-    MEMBER PROCEDURE detalhesPessoa (P tp_pessoa)
+    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
@@ -53,9 +53,9 @@ CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
 );
 /
 CREATE OR REPLACE TYPE BODY tp_cargo IS 
-MEMBER FUNCTION salarioAnual RETURN NUMBER IS 
+FINAL MEMBER FUNCTION salarioAnual RETURN NUMBER IS 
 BEGIN
-RETURN salario *12;
+RETURN salario*12;
 END;
 
 ORDER MEMBER FUNCTION comparaSalario(X tp_cargo) RETURN INTEGER IS
@@ -70,11 +70,12 @@ CREATE TABLE tb_cargo OF tp_cargo(
 /
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
-    CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT,
-    OVERRIDING MEMBER FUNCTION exibirDetalhes(f1 tp_funcionario) RETURN VARCHAR2 
+    supervisor WITH ROWID REFERENCES tp_funcionario,
+    CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
+    OVERRIDING MEMBER FUNCTION exibirDetalhesPessoa(f1 tp_pessoa) RETURN VARCHAR2 
 );
 /
-ALTER TYPE tp_funcionario ADD ATTRIBUTE (supervisor WITH ROWID REFERENCES tp_funcionario) CASCADE;
+ALTER TYPE tp_funcionario 
 /
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
 CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT IS
@@ -160,14 +161,10 @@ CREATE OR REPLACE TYPE tp_cartao_fidelidade AS OBJECT(
 /
 CREATE TYPE tp_nt_cartao_fidelidade AS TABLE OF tp_cartao_fidelidade;
 /
-CREATE TABLE tb_lista_cartao_fidelidade_cliente(
-  cpf_cliente REF tp_cliente,
+CREATE TABLE tb_lista_cartao_fidelidade(
+  cpf_cliente_cf VARCHAR(14),
   lista_cartao_fidelidade tp_nt_cartao_fidelidade  
-) NESTED TABLE lista_cartao_fidelidade STORE AS  tb_lista_cartao_fidelidade;
-/
-CREATE TABLE tb_nt_cartao_fidelidade OF tp_cartao_fidelidade(
-    cpf_cliente_cf scope is tb_cliente
-);
+) NESTED TABLE lista_cartao_fidelidade STORE AS  nt_tb_lista_cartao_fidelidade;
 /
 CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
     id_pedido NUMBER, 

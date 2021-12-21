@@ -50,16 +50,40 @@ INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES
 
 INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (02, 0.20, to_date('26/12/2021', 'dd/mm/yy'));
 
-INSERT INTO tb_cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('05/07/2020', 'dd/mm/yy'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'));
-
-INSERT INTO tb_cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('08/10/2020', 'dd/mm/yy'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '555.666.777-88'));
-
-INSERT INTO tb_cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('25/05/2021', 'dd/mm/yy'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '666.777.888-99'));
-
-INSERT INTO tb_cartao_fidelidade(data_emissao, cpf_cliente_cf) VALUES (to_date('13/11/2021', 'dd/mm/yy'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '777.888.999-00'));
-
 INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (1, to_date('05/07/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'));
 
-INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (2, to_date('08/10/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='555.666.777-88') );
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (2, to_date('15/08/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '555.666.777-88'));
 
-INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 2),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'), 00);
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (3, to_date('08/10/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='444.555.666-77') );
+
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (4, to_date('09/10/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='666.777.888-99') );
+
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (5, to_date('24/10/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='777.888.999-00') );
+
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (6, to_date('02/11/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='777.888.999-00') );
+
+INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (7, to_date('10/11/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'),(SELECT REF(c) FROM tb_cliente c WHERE c.cpf ='777.888.999-00') );
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 1),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'), 00);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 2),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '555.666.777-88'), 00);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 3),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'), 01);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 4),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '666.777.888-99'), 00);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 5),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '777.888.999-00'), 02);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 6),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '777.888.999-00'), 00);
+
+INSERT INTO tb_realizacao(id_pedido_realizacao, cpf_cliente_realizacao, codigo_promocional_realizacao) VALUES ((SELECT REF (p) FROM tb_pedido p WHERE p.id_pedido = 7),  (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '777.888.999-00'), 00);
+
+INSERT INTO tb_lista_cartao_fidelidade VALUES ('444.555.666-77', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('05/07/2020', 'dd/mm/yy')), tp_cartao_fidelidade(to_date('08/10/2020', 'dd/mm/yy'))));
+
+INSERT INTO tb_lista_cartao_fidelidade VALUES ('555.666.777-88', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('15/08/2020', 'dd/mm/yy'))));
+
+INSERT INTO tb_lista_cartao_fidelidade VALUES ('666.777.888-99', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('09/10/2020', 'dd/mm/yy'))));
+
+INSERT INTO tb_lista_cartao_fidelidade VALUES ('777.888.999-00', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('24/10/2020', 'dd/mm/yy')), tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('02/11/2020', 'dd/mm/yy')), tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('10/11/2020', 'dd/mm/yy'))));
+
+
