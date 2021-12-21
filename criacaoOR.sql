@@ -123,7 +123,7 @@ cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nas
 RETURN;
 END;
 /
-OVERRIDING MEMBER FUNCTION nomePessoa(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
+OVERRIDING MEMBER FUNCTION nomePessoa(f1 tp_funcionario) RETURN VARCHAR2 IS
 BEGIN
 RETURN f1.exibirDtalhes(f1);
 DBMS_OUTPUT.PUT_LINE('Cargo: '||P.cargo);
