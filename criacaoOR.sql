@@ -15,31 +15,34 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION exibirDetalhes(P tp_pessoa) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirEndereco(P tp_pessoa) RETURN VARCHAR2,
     MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-MEMBER FUNCTION exibirDetalhes(P tp pessoa) RETURN VARCHAR2 IS
-BEGIN
-RETURN '';
-END;
-END;
-/
-CREATE OR REPLACE TYPE BODY tp_pessoa AS
+
+MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2
+    BEGIN 
+        return  P.cpf + ' - '+ P.nome_completo
+    END;
+MEMBER FUNCTION exibirEndereco(P tp_pessoa) RETURN VARCHAR2 IS
+    BEGIN
+        RETURN  P.logradouro + ', ' + P.bairro + ', ' + P.complemento + ', '+ P.numero + ', ' + P.cep;
+    END;
 MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) IS
-BEGIN
-DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
-DBMS_OUTPUT.PUT_LINE('CPF:'||P.cpf);
-DBMS_OUTPUT.PUT_LINE('Nome: '||P.nome_completo));
-DBMS_OUTPUT.PUT_LINE('Data de NAscimento: '||to_char(P.data_nascimento));
-DBMS_OUTPUT.PUT_LINE('Telefones: '||to_char(P.telefones));
-DBMS_OUTPUT.PUT_LINE('CEP: '||to_char(P.data_nascimento));
-DBMS_OUTPUT.PUT_LINE('Logradouro: '||P.logradouro);
-DBMS_OUTPUT.PUT_LINE('Número: '||to_char(P.numero));
-DBMS_OUTPUT.PUT_LINE('Complemento: '||P.complemento);
-DBMS_OUTPUT.PUT_LINE('Bairro: '||P.bairro);
-END;
+    BEGIN
+    DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
+    DBMS_OUTPUT.PUT_LINE('CPF:'||P.cpf);
+    DBMS_OUTPUT.PUT_LINE('Nome: '||P.nome_completo));
+    DBMS_OUTPUT.PUT_LINE('Data de NAscimento: '||to_char(P.data_nascimento));
+    DBMS_OUTPUT.PUT_LINE('Telefones: '||to_char(P.telefones));
+    DBMS_OUTPUT.PUT_LINE('CEP: '||to_char(P.data_nascimento));
+    DBMS_OUTPUT.PUT_LINE('Logradouro: '||P.logradouro);
+    DBMS_OUTPUT.PUT_LINE('Número: '||to_char(P.numero));
+    DBMS_OUTPUT.PUT_LINE('Complemento: '||P.complemento);
+    DBMS_OUTPUT.PUT_LINE('Bairro: '||P.bairro);
+    END;
 END;
 
 /
@@ -72,23 +75,14 @@ CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
     supervisor WITH ROWID REFERENCES tp_funcionario,
     CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT
-    OVERRIDING MEMBER FUNCTION exibirDetalhesPessoa(f1 tp_pessoa) RETURN VARCHAR2 
+    OVERRIDING MEMBER FUNCTION exibirInfo(f1 tp_pessoa) RETURN VARCHAR2 
 );
 /
-ALTER TYPE tp_funcionario 
-/
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
-CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_pessoa) RETURN SELF AS RESULT IS
-BEGIN
-cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nascimento; endereco := f1.endereco; telefones := f1.telefones;
-RETURN;
-END;
-
-OVERRIDING MEMBER FUNCTION exibirDetalhes(f1 tp_funcionario) RETURN VARCHAR2 AS nomeFuncionario IS
-BEGIN
-RETURN f1.exibirDetalhesPessoa(f1);
-DBMS_OUTPUT.PUT_LINE('Cargo: '||f1.cargo);
-END;
+CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_funcionario) RETURN SELF AS RESULT IS
+    BEGIN
+    RETURN  return  f1.cpf + ' - '+ f1.nome_completo + ' - ' + f1.cargo.nome;
+    END;
 END;
 /
 CREATE TABLE tb_funcionario OF tp_funcionario;
