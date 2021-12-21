@@ -15,18 +15,18 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40)) RETURN VARCHAR2,
-    MEMBER FUNCTION exibirEndereco(cep VARCHAR2(9), logradouro VARCHAR2(40), numero NUMBER, complemento VARCHAR2(20), bairro VARCHAR2(20)) RETURN VARCHAR2,
-    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa)
+    MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirEndereco(cep  VARCHAR2, logradouro  VARCHAR2, numero  NUMBER, complemento  VARCHAR2, bairro  VARCHAR2) RETURN VARCHAR2,
+    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) FINAL
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-    MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40)) RETURN VARCHAR2
+    MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2
     BEGIN 
-        RETURN  cpf + ' - '+ nome_completo;
+        RETURN  P.cpf + ' - '+ P.nome_completo;
     END;
     
-    MEMBER FUNCTION exibirEndereco(cep VARCHAR2(9), logradouro VARCHAR2(40), numero NUMBER, complemento VARCHAR2(20), bairro VARCHAR2(20)) RETURN VARCHAR2 IS
+    MEMBER FUNCTION exibirEndereco(cep VARCHAR2, logradouro VARCHAR2, numero NUMBER, complemento VARCHAR2, bairro VARCHAR2) RETURN VARCHAR2 IS
     BEGIN
         RETURN  cep + ', ' + logradouro + ', ' + numero + ', '+ complemento + ', ' + bairro;
     END;
@@ -76,7 +76,7 @@ CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
     supervisor REF tp_funcionario,
     CONSTRUCTOR FUNCTION tp_funcionario(F tp_funcionario) RETURN SELF AS RESULT,
-    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), cargo VARCHAR2(20)) RETURN VARCHAR2
+    OVERRIDING MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2
 );
 /
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
@@ -97,9 +97,10 @@ CREATE OR REPLACE TYPE BODY tp_funcionario AS
     RETURN;
     END;
     
-    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), cargo VARCHAR2(20)) RETURN VARCHAR2 IS
+    OVERRIDING MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2 IS
+    F := tp_funcionario
     BEGIN
-        RETURN cpf + ' - ' + nome_completo + ' - ' + cargo;
+        RETURN F.cpf + ' - ' + F.nome_completo + ' - ' + F.cargo.nome_cargo;
     END;
 END;
 /
@@ -111,7 +112,7 @@ CREATE TABLE tb_funcionario OF tp_funcionario(
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
     data_cadastro DATE,
     CONSTRUCTOR FUNCTION tp_cliente(C tp_cliente) RETURN SELF AS RESULT,
-    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), data_cadastro DATE) RETURN VARCHAR2
+    OVERRIDING MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2
 );
 /
 CREATE OR REPLACE TYPE BODY tp_cliente AS
@@ -131,9 +132,10 @@ CREATE OR REPLACE TYPE BODY tp_cliente AS
     RETURN;
     END;
 
-    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), data_cadastro DATE) RETURN VARCHAR2 IS
+    OVERRIDING MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2 IS
+    C := tp_cliente
     BEGIN
-        RETURN cpf + ' - ' + nome_completo + ' - ' + data_cadastro;
+        RETURN C.cpf + ' - ' + C.nome_completo + ' - ' + C.data_cadastro;
     END;
 END;
 /
