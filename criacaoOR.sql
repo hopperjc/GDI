@@ -15,24 +15,23 @@ CREATE OR REPLACE TYPE tp_pessoa AS OBJECT(
     numero NUMBER, 
     complemento VARCHAR2(20),
     bairro VARCHAR2(20),
-    MEMBER FUNCTION exibirInfo() RETURN VARCHAR2,
-    MEMBER FUNCTION exibirEndereco() RETURN VARCHAR2,
-    MEMBER PROCEDURE exibirDetalhesPessoa ()
+    MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40)) RETURN VARCHAR2,
+    MEMBER FUNCTION exibirEndereco(cep VARCHAR2(9), logradouro VARCHAR2(40), numero NUMBER, complemento VARCHAR2(20), bairro VARCHAR2(20)) RETURN VARCHAR2,
+    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa)
 ) NOT FINAL NOT INSTANTIABLE;
 /
 CREATE OR REPLACE TYPE BODY tp_pessoa AS
-    MEMBER FUNCTION exibirInfo() RETURN VARCHAR2
-    P := tp_pedido
+    MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40)) RETURN VARCHAR2
     BEGIN 
-        RETURN  P.cpf + ' - '+ P.nome_completo
+        RETURN  cpf + ' - '+ nome_completo;
     END;
     
-    MEMBER FUNCTION exibirEndereco() RETURN VARCHAR2 IS
+    MEMBER FUNCTION exibirEndereco(cep VARCHAR2(9), logradouro VARCHAR2(40), numero NUMBER, complemento VARCHAR2(20), bairro VARCHAR2(20)) RETURN VARCHAR2 IS
     BEGIN
-        RETURN  P.logradouro + ', ' + P.bairro + ', ' + P.complemento + ', '+ P.numero + ', ' + P.cep;
+        RETURN  cep + ', ' + logradouro + ', ' + numero + ', '+ complemento + ', ' + bairro;
     END;
     
-    MEMBER PROCEDURE exibirDetalhesPessoa () IS
+    MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) IS
     BEGIN
     DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
     DBMS_OUTPUT.PUT_LINE('CPF:'||P.cpf);
@@ -47,7 +46,7 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
     END;
 END;
 /
-ALTER TYPE tp_pessoa ADD ATRIBUTE cidade VARCHAR2(30) CASCADE;
+ALTER TYPE tp_pessoa ADD ATTRIBUTE(cidade VARCHAR2(30)) CASCADE;
 /
 CREATE OR REPLACE TYPE tp_cargo AS OBJECT(
     id_cargo NUMBER,
@@ -75,63 +74,78 @@ CREATE TABLE tb_cargo OF tp_cargo(
 /
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
     cargo NUMBER,
-    supervisor WITH ROWID REFERENCES tp_funcionario,
-    CONSTRUCTOR FUNCTION tp_funcionario() RETURN SELF AS RESULT,
-    OVERRIDING MEMBER FUNCTION exibirInfo() RETURN VARCHAR2
+    supervisor REF tp_funcionario,
+    CONSTRUCTOR FUNCTION tp_funcionario(F tp_funcionario) RETURN SELF AS RESULT,
+    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), cargo VARCHAR2(20)) RETURN VARCHAR2
 );
 /
 CREATE OR REPLACE TYPE BODY tp_funcionario AS
-    f1 := tp_funcionario
-    CONSTRUCTOR FUNCTION tp_funcionario() RETURN SELF AS RESULT IS
+    CONSTRUCTOR FUNCTION tp_funcionario(f1 tp_funcionario) RETURN SELF AS RESULT IS
     BEGIN
-        cpf := f1.cpf; nome_completo := f1.nome_completo; data_nascimento := f1.data_nascimento; telefones := f1.telefones; cep := f1.cep; logradouro := f1.logradouro; numero := f1.numero; complemento := f1.complemento; bairro := f1.bairro; cidade := f1.cidade;
+        cpf := f1.cpf; 
+        nome_completo := f1.nome_completo; 
+        data_nascimento := f1.data_nascimento; 
+        telefones := f1.telefones; 
+        cep := f1.cep; 
+        logradouro := f1.logradouro; 
+        numero := f1.numero; 
+        complemento := f1.complemento; 
+        bairro := f1.bairro; 
+        cidade := f1.cidade;
+        cargo := f1.cargo;
+        supervisor := f1.supervisor;
     RETURN;
     END;
     
-    OVERRIDING MEMBER FUNCTION exibirInfo() RETURN VARCHAR2 IS
+    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), cargo VARCHAR2(20)) RETURN VARCHAR2 IS
     BEGIN
-        RETURN f1.cpf + ' - ' + f1.nome_completo + ' - ' + f1.cargo.nome_cargo
+        RETURN cpf + ' - ' + nome_completo + ' - ' + cargo;
     END;
 END;
 /
-CREATE TABLE tb_funcionario OF tp_funcionario;
+CREATE TABLE tb_funcionario OF tp_funcionario(
+    cpf PRIMARY KEY,
+    supervisor WITH ROWID REFERENCES tb_funcionario
+);
 /
 CREATE OR REPLACE TYPE tp_cliente UNDER tp_pessoa(
     data_cadastro DATE,
-    CONSTRUCTOR FUNCTION tp_cliente() RETURN SELF AS RESULT,
-    OVERRIDING MEMBER FUNCTION exibirInfo() RETURN VARCHAR2
+    CONSTRUCTOR FUNCTION tp_cliente(C tp_cliente) RETURN SELF AS RESULT,
+    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), data_cadastro DATE) RETURN VARCHAR2
 );
 /
 CREATE OR REPLACE TYPE BODY tp_cliente AS
-    c1 := tp_cliente
-    CONSTRUCTOR FUNCTION tp_cliente() RETURN SELF AS RESULT IS
+    CONSTRUCTOR FUNCTION tp_cliente(C tp_cliente) RETURN SELF AS RESULT IS
     BEGIN 
-        cpf := c1.cpf; nome_completo := c1.nome_completo; data_nascimento := c1.data_nascimento; telefones := c1.telefones; cep := c1.cep; logradouro := c1.logradouro; numero := c1.numero; complemento := c1.complemento; bairro := c1.bairro; cidade := c1.cidade;
+        cpf := C.cpf; 
+        nome_completo := C.nome_completo; 
+        data_nascimento := C.data_nascimento; 
+        telefones := C.telefones; 
+        cep := C.cep; 
+        logradouro := C.logradouro; 
+        numero := C.numero; 
+        complemento := C.complemento; 
+        bairro := C.bairro; 
+        cidade := C.cidade;
+        data_cadastro := C.data_cadastro;
     RETURN;
     END;
 
-    OVERRIDING MEMBER FUNCTION exibirInfo() RETURN VARCHAR2 IS
+    OVERRIDING MEMBER FUNCTION exibirInfo(cpf VARCHAR2(14), nome_completo VARCHAR2(40), data_cadastro DATE) RETURN VARCHAR2 IS
     BEGIN
-        RETURN c1.cpf + ' - ' + c1.nome_completo + ' - ' + c1.data_cadastro;
+        RETURN cpf + ' - ' + nome_completo + ' - ' + data_cadastro;
     END;
 END;
 /
-CREATE TABLE tb_cliente OF tp_cliente;
+CREATE TABLE tb_cliente OF tp_cliente(
+    cpf PRIMARY KEY
+);
 /
 CREATE OR REPLACE TYPE tp_estoque AS OBJECT(
     id_estoque NUMBER,
     qtd_produtos NUMBER,
-    status_estoque VARCHAR(20),
---    MEMBER PROCEDURE insert_estoque
+    status_estoque VARCHAR(20)
 );
-/
---CREATE TYPE BODY tp_estoque AS
---   MEMBER PROCEDURE insert_estoque IS
---   BEGIN
---       INSERT INTO tb_estoque VALUES (id_estoque);
---       COMMIT;
---   END insert_estoque;
---END;
 /
 CREATE TABLE tb_estoque OF tp_estoque(
     id_estoque PRIMARY KEY
@@ -217,13 +231,10 @@ CREATE TABLE tb_contem OF tp_contem(
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     data_armazenagem DATE,
     id_estoque_armazena REF tp_estoque,
-    cpf_funcionario_armazena REF tp_funcionario,
-    id_estoque_armazena REF tp_estoque
+    cpf_funcionario_armazena REF tp_funcionario
 );
 /
-create table tb_armazena of tp_armazena;
-/
-CREATE TABLE tb_contem OF tp_contem(
-    id_pedido_contem SCOPE IS tb_pedido,
-    id_produto_contem SCOPE IS tb_produto
+CREATE TABLE tb_armazena of tp_armazena(
+    id_estoque_armazena SCOPE IS tb_estoque,
+    cpf_funcionario_armazena SCOPE IS tb_funcionario
 );
