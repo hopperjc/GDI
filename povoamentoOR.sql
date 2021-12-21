@@ -18,19 +18,19 @@ INSERT INTO tb_cliente(cpf, nome_completo, data_nascimento, cep, logradouro, num
 
 INSERT INTO tb_cliente(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro, data_cadastro) VALUES ('777.888.999-00', 'Maria Augusta Neto', to_date('01/10/1996', 'dd/mm/yy'), '66666-676', 'Avenida João Gomes', 7890, 'apt. 305', 'esquina', to_date('13/11/2021', 'dd/mm/yy'));
 
-INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 120, 'Com espaço');
+INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (1, 120, 'Com espaço');
 
-INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 300, 'Cheio');
+INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (2, 300, 'Cheio');
 
-INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 260, 'Com espaço');
+INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (3, 260, 'Com espaço');
 
-INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 200, 'Cheio');
+INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (4, 200, 'Cheio');
 
-INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (seq_id_estoque.nextval, 00, 'Vazio');
+INSERT INTO tb_estoque(id_estoque, qtd_produtos, status_estoque) VALUES (5, 00, 'Vazio');
 
 INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (2, 'pastilha', 'doce', 2.00);
 
-INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (3, 'bombom', 'doce');
+INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (3, 'bombom', 'doce', 1.50);
 
 INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (4, 'salgadinho', 'salgado', 4.00);
 
@@ -82,8 +82,4 @@ INSERT INTO tb_lista_cartao_fidelidade VALUES ('444.555.666-77', tp_nt_cartao_fi
 
 INSERT INTO tb_lista_cartao_fidelidade VALUES ('555.666.777-88', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('15/08/2020', 'dd/mm/yy'))));
 
-INSERT INTO tb_lista_cartao_fidelidade VALUES ('666.777.888-99', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('09/10/2020', 'dd/mm/yy'))));
-
-INSERT INTO tb_lista_cartao_fidelidade VALUES ('777.888.999-00', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('24/10/2020', 'dd/mm/yy')), tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('02/11/2020', 'dd/mm/yy')), tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('10/11/2020', 'dd/mm/yy'))));
-
-
+INSERT INTO tb_lista_cartao_fidelidade VALUES ('777.888.999-00', tp_nt_cartao_fidelidade(tp_cartao_fidelidade(to_date('24/10/2020','dd/mm/yy')), tp_cartao_fidelidade(to_date('02/11/2020', 'dd/mm/yy')), tp_cartao_fidelidade(to_date('10/11/2020', 'dd/mm/yy'))));
