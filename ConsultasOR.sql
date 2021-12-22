@@ -36,13 +36,11 @@ select deref(a.id_produto_armazena).nome as produto,
     deref(a.id_estoque_armazena).status_estoque as status,
     deref(a.cpf_funcionario_armazena).nome_completo as funcionario 
     from  tb_armazena a where a.data_armazenagem between to_date('1/3/2020', 'dd/mm/yy') and  to_date('31/3/2020', 'dd/mm/yy') ;
-    
 /
 -- Quantidade de armazenagens de cada funcionario
 select deref(a.cpf_funcionario_armazena).nome_completo as produto, count(a.id_produto_armazena) as quantidade from tb_armazena a
     group by deref(a.cpf_funcionario_armazena).nome_completo;
 /
-
 -- Valor final de pedido 1 realizado    
 select sum(c.quantidade*p.preco) - max(pr.valor_desconto) as valor from tb_realizacao r
     inner join tb_contem c
