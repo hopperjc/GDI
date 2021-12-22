@@ -22,3 +22,11 @@ UPDATE TABLE (SELECT c.lista_cartao_fidelidade FROM tb_lista_cartao_fidelidade c
 -- Retorna o funcionario seu cargo e o supervisor.
 select DEREF(f.supervisor).nome_completo as supervisor, f.nome_completo as funcionario, DEREF(f.cargo).nome_cargo as cargo from tb_funcionario f;
 /
+-- Nome, ID e Categoria dos produtos que custam 4.00
+SELECT nome, id_produto, categoria FROM tb_produto WHERE preco = 4.00;
+/
+-- Status dos estoque com ID abaixo de 3
+SELECT status_estoque FROM tb_estoque WHERE id_estoque <= 3;
+/
+-- Nome completo dos gerentes
+SELECT f.nome_completo FROM tb_funcionario f WHERE DEREF(f.cargo).nome_cargo = 'Gerente';
