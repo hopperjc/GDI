@@ -31,6 +31,7 @@ CREATE OR REPLACE TYPE BODY tp_pessoa AS
         RETURN  cep + ', ' + logradouro + ', ' + numero + ', '+ complemento + ', ' + bairro;
     END;
     
+    
     MEMBER PROCEDURE exibirDetalhesPessoa (P tp_pessoa) IS
     BEGIN
     DBMS_OUTPUT.PUT_LINE('Detalhes da Pessoa:');
@@ -210,9 +211,9 @@ CREATE TABLE tb_pedido OF tp_pedido(
 );
 /
 CREATE OR REPLACE TYPE tp_realizacao AS OBJECT (
+    codigo_promocional_realizacao NUMBER,
     id_pedido_realizacao REF tp_pedido,
-    cpf_cliente_realizacao REF tp_cliente,
-    codigo_promocional_realizacao NUMBER
+    cpf_cliente_realizacao REF tp_cliente
 );
 /
 CREATE TABLE tb_realizacao OF tp_realizacao(
