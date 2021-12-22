@@ -8,15 +8,13 @@ SELECT DEREF(e.id_estoque) FROM tb_produto p
 WHERE p.nome = 'coxinha';
 /
 
-SELECT * FROM TABLE (SELECT c.lista_cartao_fidelidade FROM tb_lista_cartao_fidelidade_cliente c WHERE c.data_emissao = '08/10/2020');
+SELECT * FROM TABLE (SELECT c.lista_cartao_fidelidade FROM tb_lista_cartao_fidelidade c WHERE c.cpf_cliente_cf = '444.555.666-77');
 /
 
 --Mude a data de emição do cartão fidelidade emitido em 08/10/0202 para 12/10/2020
-UDPATE TABLE (SELECT lista_cartoes FROM TABLE tb_lista_cartao_fidelidade_cliente
-                WHERE data_emissao = '08/10/2020') C SET C.data_emissao = '12/10/2020' 
-                WHERE (SELECT DEREF(l.cpf_cliente_cf) FROM tb_lista_cartao_fidelidade_cliente l, tb_cliente cl 
-                        WHERE l.cpf_client_cf = cl.cpf_cliente);
-/
+UPDATE TABLE (SELECT c.lista_cartao_fidelidade FROM tb_lista_cartao_fidelidade c WHERE c.cpf_cliente_cf = '444.555.666-77') cf
+    SET cf.data_emissao = to_date('12/10/2020', 'dd/mm/yy')
+    WHERE cf.data_emissao = to_date('08/10/2020', 'dd/mm/yy')
 
 
 -- Retorna o funcionario seu cargo e o supervisor

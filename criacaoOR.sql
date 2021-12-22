@@ -193,7 +193,8 @@ CREATE TYPE tp_nt_cartao_fidelidade AS TABLE OF tp_cartao_fidelidade;
 CREATE TABLE tb_lista_cartao_fidelidade(
     cpf_cliente_cf VARCHAR(14),
     lista_cartao_fidelidade tp_nt_cartao_fidelidade  
-) NESTED TABLE lista_cartao_fidelidade STORE AS  nt_tb_lista_cartao_fidelidade;
+) NESTED TABLE lista_cartao_fidelidade STORE AS  tb_nt_lista_cartao_fidelidade;
+
 /
 CREATE OR REPLACE TYPE tp_pedido AS OBJECT(
     id_pedido NUMBER, 
