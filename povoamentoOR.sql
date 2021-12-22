@@ -6,9 +6,9 @@ INSERT INTO tb_cargo(id_cargo, nome_cargo, salario) VALUES (03, 'Lojista', 4000)
 
 INSERT INTO tb_funcionario(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro, cargo) VALUES ('111.222.333.44', 'José da Silva', to_date('01/01/1969', 'dd/mm/yy'), '00000-010', 'Rua da esquina', 123, 'apt. 1', 'esquina', 01);
 
-INSERT INTO tb_funcionario(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro,cargo) VALUES ('222.333.444-55', 'Ana Sobral', to_date('24/04/1987', 'dd/mm/yy'), '11111-121', 'Rua da entrada', 234, 'apt. 401', 'entrada', 03);
+INSERT INTO tb_funcionario(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro,cargo, supervisor) VALUES ('222.333.444-55', 'Ana Sobral', to_date('24/04/1987', 'dd/mm/yy'), '11111-121', 'Rua da entrada', 234, 'apt. 401', 'entrada', 03, (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'));
 
-INSERT INTO tb_funcionario(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro,cargo) VALUES ('333.444.555-66', 'Lucas Cavalcanti', to_date('14/03/1992', 'dd/mm/yy'), '22222-232', 'Rua da saida', 345, 'Casa 12', 'saida', 02);
+INSERT INTO tb_funcionario(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro, cargo, supervisor) VALUES ('333.444.555-66', 'Lucas Cavalcanti', to_date('14/03/1992', 'dd/mm/yy'), '22222-232', 'Rua da saida', 345, 'Casa 12', 'saida', 02,(SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'));
 
 INSERT INTO tb_cliente(cpf, nome_completo, data_nascimento, cep, logradouro, numero, complemento, bairro, data_cadastro) VALUES ('444.555.666-77', 'Matheus Cabral', to_date('08/09/1988', 'dd/mm/yy'), '33333-343', 'Avenida rosquinha', 456, 'Bloco 1 Apt. 201', 'rosquinha', to_date('05/07/2020', 'dd/mm/yy'));
 
