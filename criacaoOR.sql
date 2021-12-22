@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE tp_telefone AS OBJECT(
-    ddd NUMBER,
-    numero NUMBER
+    ddd VARCHAR2(2),
+    numero VARCHAR2(10)
 );
 /
 CREATE OR REPLACE TYPE tp_telefones AS VARRAY(5) OF tp_telefone;
@@ -233,10 +233,12 @@ CREATE TABLE tb_contem OF tp_contem(
 CREATE OR REPLACE TYPE tp_armazena AS OBJECT(
     data_armazenagem DATE,
     id_estoque_armazena REF tp_estoque,
+    id_produto_armazena REF tp_produto,
     cpf_funcionario_armazena REF tp_funcionario
 );
 /
 CREATE TABLE tb_armazena of tp_armazena(
     id_estoque_armazena SCOPE IS tb_estoque,
+    id_produto_armazena SCOPE IS tb_produto,
     cpf_funcionario_armazena SCOPE IS tb_funcionario
 );
