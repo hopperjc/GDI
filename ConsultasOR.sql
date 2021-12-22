@@ -30,3 +30,25 @@ SELECT status_estoque FROM tb_estoque WHERE id_estoque <= 3;
 /
 -- Nome completo dos gerentes
 SELECT f.nome_completo FROM tb_funcionario f WHERE DEREF(f.cargo).nome_cargo = 'Gerente';
+/
+-- Produtos armazenados no mês de março de 2020
+select deref(a.id_produto_armazena).nome as produto,
+    deref(a.id_estoque_armazena).status_estoque as status,
+    deref(a.cpf_funcionario_armazena).nome_completo as funcionario 
+    from  tb_armazena a where a.data_armazenagem between to_date('1/3/2020', 'dd/mm/yy') and  to_date('31/3/2020', 'dd/mm/yy') ;
+    
+/
+-- Quantidade de armazenagens de cada funcionario
+select deref(a.cpf_funcionario_armazena).nome_completo as produto, count(a.id_produto_armazena) as quantidade from tb_armazena a
+    group by deref(a.cpf_funcionario_armazena).nome_completo;
+/
+
+-- Valor final de pedido 1 realizado    
+select sum(c.quantidade*p.preco) - max(pr.valor_desconto) as valor from tb_realizacao r
+    inner join tb_contem c
+    on c.id_pedido_contem = (select ref(pe) from tb_pedido pe where pe.id_pedido = 1)
+    inner join tb_produto p
+    on p.id_produto = deref(c.id_produto_contem).id_produto
+    inner join tb_promocao pr
+    on pr.codigo_promocional = r.codigo_promocional_realizacao
+    where id_pedido_realizacao = (select ref(pe) from tb_pedido pe where pe.id_pedido = 1) and pr.data_termino > trunc(sysdate);

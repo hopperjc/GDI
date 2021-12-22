@@ -46,11 +46,11 @@ INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (8, 'pão pizz
 
 INSERT INTO tb_produto(id_produto, nome, categoria, preco) VALUES (9, 'água', 'bebida', 3.00);
 
-INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (00, 0, to_date('31/12/2022', 'dd/mm/yy'));
+INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (00, 5, to_date('31/12/2022', 'dd/mm/yy'));
 
-INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (01, 0.15, to_date('01/01/2022', 'dd/mm/yy'));
+INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (01, 10, to_date('01/01/2022', 'dd/mm/yy'));
 
-INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (02, 0.20, to_date('26/12/2021', 'dd/mm/yy'));
+INSERT INTO tb_promocao(codigo_promocional, valor_desconto, data_termino) VALUES (02, 15, to_date('26/12/2021', 'dd/mm/yy'));
 
 INSERT INTO tb_pedido(id_pedido, data_pedido, cpf_funcionario_pedido, cpf_cliente_pedido) VALUES (1, to_date('05/07/2020', 'dd/mm/yy'), (SELECT REF(f) FROM tb_funcionario f WHERE f.cpf = '333.444.555-66'), (SELECT REF(c) FROM tb_cliente c WHERE c.cpf = '444.555.666-77'));
 
