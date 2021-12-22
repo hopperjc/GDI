@@ -73,7 +73,7 @@ CREATE TABLE tb_cargo OF tp_cargo(
 );
 /
 CREATE OR REPLACE TYPE tp_funcionario UNDER tp_pessoa(
-    cargo NUMBER,
+    cargo REF tp_cargo,
     supervisor REF tp_funcionario,
     CONSTRUCTOR FUNCTION tp_funcionario(F tp_funcionario) RETURN SELF AS RESULT,
     OVERRIDING MEMBER FUNCTION exibirInfo(P tp_pessoa) RETURN VARCHAR2

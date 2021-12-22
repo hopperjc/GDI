@@ -17,3 +17,8 @@ UDPATE TABLE (SELECT lista_cartoes FROM TABLE tb_lista_cartao_fidelidade_cliente
                 WHERE (SELECT DEREF(l.cpf_cliente_cf) FROM tb_lista_cartao_fidelidade_cliente l, tb_cliente cl 
                         WHERE l.cpf_client_cf = cl.cpf_cliente);
 /
+
+
+-- Retorna o funcionario seu cargo e o supervisor
+select DEREF(f.supervisor).nome_completo as supervisor, f.nome_completo as funcionario, DEREF(f.cargo).nome_cargo as cargo from tb_funcionario f;
+/
