@@ -47,3 +47,20 @@ db.enderecos.aggregate([
 
 // Listar CPF, nome, email do cliente de CPF "999.888.777-66"
 db.clientes.findOne({ cpf: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1})
+
+//Função que retorna uma mensagem indicando que a encomenda foi paga
+db.consultas.aggregate([
+    {
+      $addFields: {
+        message: {
+          $function: {
+            body: function (custo) {
+              return `Opa!  Você pagou a encomenda no valor de ${custo}`;
+            },
+            args: ["$custo"],
+            lang: "js",
+          },
+        },
+      },
+    },
+  ]).pretty();
