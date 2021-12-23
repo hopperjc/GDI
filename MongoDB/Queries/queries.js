@@ -194,9 +194,8 @@ db.funcionarios.aggregate(
             }
         }
     ]
-    );
+);
 
-//24.filter - Retorna informações de acordo com as condiçoes sujeridas. mostrar o id do dentista e mostrar os que realizaram o procedimento 2
 db.clientes.aggregate([{"$project": {"nome": "Fernando Chaves","enderecos": {"$filter": {"input": "$endereco", "as": "end", "cond": { "$eq": ["$$end", 3]}}}}}]);
     
-    db.funcionarios.renameCollection("entregadores");
+db.funcionarios.renameCollection("entregadores");
