@@ -205,7 +205,7 @@ db.encomendas.aggregate([
           $filter: {
              input: "$items",
              as: "item",
-             cond: { $gte: [ "$$item.fragil", true ] }
+             cond: { $eq: [ "$$item.fragil", true ] }
           }
        }
       },
