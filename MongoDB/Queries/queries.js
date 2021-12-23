@@ -187,7 +187,7 @@ db.funcionarios.aggregate(
             {
                 nome:1, 
                 salario: 1,
-                aumento:
+                comicao:
                 {
                     $cond: { if: { $eq: [ "$salario", 2500 ] }, then: 10, else: 30 }
                 }
