@@ -50,7 +50,7 @@ db.encomenda.insertMany([
         comprimento: 50, 
         largura: 30,
         altura: 10,
-        cliente: 6,
+        cliente: 3,
         custo: 280.00
     },
     {

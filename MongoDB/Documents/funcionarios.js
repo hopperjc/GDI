@@ -1,5 +1,5 @@
 // Criando coleção de funcionários
-db.funcionarios.insert([
+db.funcionarios.insertMany([
     {
         _id: 1,
         nome : "José Augusto",
