@@ -20,12 +20,12 @@
 // function OK
 // pretty OK
 // all
-// set
+// set OK
 // text
 // search OK
 // filter
 // update
-// save
+// save OK
 // renamecollection
 // cond
 // lookup
@@ -71,3 +71,16 @@ db.funcionarios.find({
       $search: "F",
     },
   }).pretty();
+
+  // nova encomenda de Carlos Antonio
+  db.encomendas.save({
+    peso: 15,
+    comprimento: 15, 
+    largura: 15,
+    altura: 8,
+    cliente: 1,
+    custo: 105.00
+  })
+
+  // Atualizar o logradouro da Rua 2 para Rua 22
+db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { Valor: "Rua 22" } });
