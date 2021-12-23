@@ -1,5 +1,5 @@
 // Criando coleção de clientFirstMessageBare
-db.cliente.insertMany([
+db.clientes.insertMany([
     {
         _id: 1,
         nome : "Carlos Antonio",
@@ -17,7 +17,7 @@ db.cliente.insertMany([
         email : "mclara@gmail.com.br",
         telefone : 81888887777,
         sexo : "F",
-        endereco_principal: 1,
+        endereco_principal: 0,
         enderecos: [2]
     },
     {
@@ -46,8 +46,11 @@ db.cliente.insertMany([
         cpf : "555.444.333-22",
         email : "nandinho@gmail.com.br",
         telefone : 81555554444,
-        sexo : "M",
-        endereco_principal: 0,
+        sexo : "F",
+        endereco_principal: 1,
         enderecos: [3, 5]
     }
 ])
+
+db.clientes.update({nome: "Leticia Torres"}, {$set: {nome: "Letycia Torres"}})
+db.clientes.update({nome: "Fernando Chaves"}, {$set: {sexo: "M"}})
