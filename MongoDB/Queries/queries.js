@@ -8,7 +8,7 @@ const { text } = require("stream/consumers");
 // aggregate OK
 // match OK
 // project OK
-// gte
+// gte OK
 // group OK
 // sum OK
 // count OK
@@ -66,6 +66,9 @@ db.total_encomendas.aggregate([
       },
     },
   ]).pretty();
+
+//Seleciona os funcionarios com salario maior ou igual a 1000
+db.funcionarios.find({ salario: { $gte: 1000 } }).pretty();
 
   //Procura todos os funcionarios que são do sexo feminino
 db.funcionarios.createIndex({sex: "text"})
