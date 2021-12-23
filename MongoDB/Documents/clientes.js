@@ -18,7 +18,7 @@ db.cliente.insertMany([
         telefone : 81888887777,
         sexo : "F",
         endereco_principal: 1,
-        enderecos: [2, 5]
+        enderecos: [2]
     },
     {
         _id: 3,
@@ -28,7 +28,7 @@ db.cliente.insertMany([
         telefone : 81777776666,
         sexo : "M",
         endereco_principal: 0,
-        enderecos: [4]
+        enderecos: [4, 6]
     },
     {
         _id: 4,
@@ -48,6 +48,6 @@ db.cliente.insertMany([
         telefone : 81555554444,
         sexo : "M",
         endereco_principal: 0,
-        enderecos: [6,3]
+        enderecos: [3, 5]
     }
 ])
