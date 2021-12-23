@@ -32,7 +32,7 @@ const { text } = require("stream/consumers");
 // cond
 // lookup
 // findone OK
-// addtoset
+// addtoset OK
 
 // Encontre a encomenda que pertence ao CLiente de id 2
 db.encomendas.find({ cliente: { $exists: true, $all: [3] } }).pretty();
