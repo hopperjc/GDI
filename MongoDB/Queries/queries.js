@@ -28,7 +28,7 @@ const { text } = require("stream/consumers");
 // filter
 // update OK
 // save OK
-// renamecollection
+// renamecollection OK
 // cond
 // lookup
 // findone OK
@@ -113,5 +113,16 @@ db.pet.aggregate([
       },
     },
   ]).pretty();
+
+
+  // adicionar altura nas medidas da encomenda 2
+  db.encomendas.update(
+    { _id: 2 },
+    {
+      $addToSet: {
+        medidas: {altura: 4},
+      },
+    }
+  );
 
   db.funcionarios.renameCollection("entregadores");
