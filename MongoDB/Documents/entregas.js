@@ -21,7 +21,7 @@ db.entregas.insertMany([
     {
         _id: 3, 
         encomenda: 3,
-        entregador: 1,
+        entregador: 2,
         destino: 4,
         horario_saida: new Date("2021-11-11"),
         horario_chegada: new Date("2021-12-21"),
@@ -30,7 +30,7 @@ db.entregas.insertMany([
     {
         _id: 4, 
         encomenda: 4,
-        entregador: 1,
+        entregador: 4,
         destino: 7,
         horario_saida: new Date("2021-12-10"),
         horario_chegada: new Date(),
@@ -39,7 +39,7 @@ db.entregas.insertMany([
     {
         _id: 5, 
         encomenda: 5,
-        entregador: 1,
+        entregador: 5,
         destino: 3,
         horario_saida: new Date("2021-12-16"),
         horario_chegada: new Date(),
@@ -48,7 +48,7 @@ db.entregas.insertMany([
     {
         _id: 6, 
         encomenda: 6,
-        entregador: 1,
+        entregador: 3,
         destino: 6,
         horario_saida: new Date("2021-11-11"),
         horario_chegada: new Date("2021-12-21"),
@@ -57,7 +57,7 @@ db.entregas.insertMany([
     {
         _id: 7, 
         encomenda: 7,
-        entregador: 1,
+        entregador: 3,
         destino: 4,
         horario_saida: new Date("2021-11-11"),
         horario_chegada: new Date("2021-12-21"),
@@ -66,7 +66,7 @@ db.entregas.insertMany([
     {
         _id: 8, 
         encomenda: 8,
-        entregador: 1,
+        entregador: 2,
         destino: 5,
         horario_saida: new Date("2021-12-16"),
         horario_chegada: new Date(),
