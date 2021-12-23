@@ -125,4 +125,7 @@ db.pet.aggregate([
     }
   );
 
+//12.avg - Media salarial agrupado por genero
+db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }])
+
   db.funcionarios.renameCollection("entregadores");

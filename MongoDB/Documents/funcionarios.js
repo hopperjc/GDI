@@ -8,6 +8,7 @@ db.funcionarios.insertMany([
         email : "jose@entregas.com.br",
         telefone : 81999999999,
         sexo : "M",
+        salario: 2500,
         NIT : "999.99999.99-9"
     },
     {
@@ -18,6 +19,7 @@ db.funcionarios.insertMany([
         email: "anac@entregas.com.br",
         telefone: 81888888888,
         sexo: "F",
+        salario: 2000,
         NIT : "888.88888.88-8"
     },
     {
@@ -28,6 +30,7 @@ db.funcionarios.insertMany([
         email: "helena@entregas.com.br",
         telefone: 81777777777,
         sexo: "F",
+        salario: 2000,
         NIT : "777.77777.77-7"
     },
     {
@@ -38,6 +41,7 @@ db.funcionarios.insertMany([
         email : "lucas@entregas.com.br",
         telefone : 81666666666,
         sexo : "M",
+        salario: 2500,
         NIT : "666.66666.66-6"
     },
     {
@@ -48,6 +52,7 @@ db.funcionarios.insertMany([
         email : "isa@entregas.com.br",
         telefone : 81555555555,
         sexo : "F",
+        salario: 2000,
         NIT : "555.55555.55-5"
     }
 ])
