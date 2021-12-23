@@ -1,5 +1,37 @@
 // use db;
 
+// use
+// find
+// size
+// aggregate
+// match
+// project
+// gte
+// group
+// sum
+// count
+// max
+// avg
+// exists
+// sort
+// limit 
+// $where
+// mapreduce
+// function
+// pretty
+// all
+// set
+// text
+// search
+// filter
+// update
+// save
+// renamecollection
+// cond
+// lookup
+// findone
+// addtoset
+
 // Encontre a encomenda que pertence ao CLiente de id 2
 db.encomendas.find({ cliente: { $exists: true, $all: [3] } }).pretty();
 
@@ -13,5 +45,7 @@ db.enderecos.aggregate([
     { $project:  { _id: 0, cep : 1, logradouro : 1, bairro : 1, cidade : 1, estado : 1, numero: 1, complemento: 1, referencia: 1}},
   ]).pretty();
 
-  // Listar CPF, nome, email do cliente de CPF "999.888.777-66"
-db.client.findOne({ CPF: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1, telefone: 0, sexo: 0, endereco_principal: 0, enderecos: 0 });
+// Listar CPF, nome, email do cliente de CPF "999.888.777-66"
+db.clientes.findOne({ CPF: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1, telefone: 0, sexo: 0, endereco_principal: 0, enderecos: 0 });
+
+  
