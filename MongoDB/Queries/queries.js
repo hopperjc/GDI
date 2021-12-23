@@ -98,7 +98,7 @@ db.encomendas.find({
   // Pegar as três encomendas de maior valor
 db.encomendas.find().sort({ custo: -1 }).limit(3);
 
-// sexo do empregado com maior salario
+// max
 db.funcionarios.aggregate([
     {
         $group: {
