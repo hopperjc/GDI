@@ -7,6 +7,11 @@ db.encomendas.insertMany([
             {largura: 9},
             {altura: 4}
         ],
+        items: [
+            {item_id: 1, quantidade: 2, fragil: false},
+            {item_id: 2, quantidade: 1, fragil: false},
+            {item_id: 3, quantidade: 1, fragil: true},
+        ],
         cliente: 1,
         custo: 70.00
     },
@@ -16,6 +21,10 @@ db.encomendas.insertMany([
         medidas: [
             {comprimento: 3}, 
             {largura: 5},
+        ],
+        items: [
+            {item_id: 1, quantidade: 5, fragil: false},
+            {item_id: 2, quantidade: 4, fragil: false},
         ],
         cliente: 2,
         custo: 37.00
@@ -28,6 +37,11 @@ db.encomendas.insertMany([
             {largura: 90},
             {altura: 50}
         ],
+        items: [
+            {item_id: 1, quantidade: 1, fragil: true},
+            {item_id: 2, quantidade: 1, fragil: true},
+            {item_id: 3, quantidade: 1, fragil: true},
+        ],
         cliente: 3,
         custo: 700.00
     },
@@ -38,6 +52,8 @@ db.encomendas.insertMany([
             {comprimento: 29}, 
             {largura: 42},
             {altura: 17}
+        ],items: [
+            {item_id: 1, quantidade: 6, fragil: true},
         ],
         cliente: 4,
         custo: 175.00
@@ -50,6 +66,10 @@ db.encomendas.insertMany([
             {largura: 18},
             {altura: 18}
         ],
+        items: [
+            {item_id: 1, quantidade: 1, fragil: false},
+            {item_id: 2, quantidade: 1, fragil: false}
+        ],
         cliente: 5,
         custo: 122.50
     },
@@ -60,6 +80,12 @@ db.encomendas.insertMany([
             {comprimento: 50}, 
             {largura: 30},
             {altura: 10}
+        ],
+        items: [
+            {item_id: 1, quantidade: 2, fragil: false},
+            {item_id: 2, quantidade: 1, fragil: false},
+            {item_id: 3, quantidade: 1, fragil: true},
+            {item_id: 4, quantidade: 10, fragil: true},
         ],
         cliente: 3,
         custo: 280.00
@@ -72,6 +98,10 @@ db.encomendas.insertMany([
             {largura: 150},
             {altura: 50}
         ],
+        items: [
+            {item_id: 1, quantidade: 1, fragil: true},
+            {item_id: 2, quantidade: 1, fragil: false},
+        ],
         cliente: 3,
         custo: 1750.00
     },
@@ -82,6 +112,9 @@ db.encomendas.insertMany([
             {comprimento: 3}, 
             {largura: 3},
             {altura: 4}
+        ],
+        items: [
+            {item_id: 1, quantidade: 1, fragil: false}
         ],
         cliente: 5,
         custo: 14.00

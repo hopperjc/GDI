@@ -5,8 +5,8 @@ db.entregas.insertMany([
         encomenda: 1,
         entregador: 1,
         destino: 1,
-        horario_saida: new Date("2021-10-12"),
-        horario_chegada: new Date("2021-11-08"),
+        data_saida: new Date("2021-10-12"),
+        data_chegada: new Date("2021-11-08"),
         entregue: true
     },
     {
@@ -14,8 +14,8 @@ db.entregas.insertMany([
         encomenda: 2,
         entregador: 1,
         destino: 2,
-        horario_saida: new Date("2021-10-16"),
-        horario_chegada: new Date("2021-11-13"),
+        data_saida: new Date("2021-10-16"),
+        data_chegada: new Date("2021-11-13"),
         entregue: true
     },
     {
@@ -23,8 +23,8 @@ db.entregas.insertMany([
         encomenda: 3,
         entregador: 2,
         destino: 4,
-        horario_saida: new Date("2021-11-11"),
-        horario_chegada: new Date("2021-12-21"),
+        data_saida: new Date("2021-11-11"),
+        data_chegada: new Date("2021-12-21"),
         entregue: true
     },
     {
@@ -32,8 +32,8 @@ db.entregas.insertMany([
         encomenda: 4,
         entregador: 4,
         destino: 7,
-        horario_saida: new Date("2021-12-10"),
-        horario_chegada: new Date(),
+        data_saida: new Date("2021-12-10"),
+        data_chegada: new Date(),
         entregue: false
     },
     {
@@ -41,8 +41,8 @@ db.entregas.insertMany([
         encomenda: 5,
         entregador: 5,
         destino: 3,
-        horario_saida: new Date("2021-12-16"),
-        horario_chegada: new Date(),
+        data_saida: new Date("2021-12-16"),
+        data_chegada: new Date(),
         entregue: false
     },
     {
@@ -50,8 +50,8 @@ db.entregas.insertMany([
         encomenda: 6,
         entregador: 3,
         destino: 6,
-        horario_saida: new Date("2021-11-11"),
-        horario_chegada: new Date("2021-12-21"),
+        data_saida: new Date("2021-11-11"),
+        data_chegada: new Date("2021-12-21"),
         entregue: false
     },
     {
@@ -59,8 +59,8 @@ db.entregas.insertMany([
         encomenda: 7,
         entregador: 3,
         destino: 4,
-        horario_saida: new Date("2021-11-11"),
-        horario_chegada: new Date("2021-12-21"),
+        data_saida: new Date("2021-11-11"),
+        data_chegada: new Date("2021-12-21"),
         entregue: true
     },
     {
@@ -68,8 +68,8 @@ db.entregas.insertMany([
         encomenda: 8,
         entregador: 2,
         destino: 5,
-        horario_saida: new Date("2021-12-16"),
-        horario_chegada: new Date(),
+        data_saida: new Date("2021-12-16"),
+        data_chegada: new Date(),
         entregue: false
     },
 ])

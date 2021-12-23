@@ -25,7 +25,7 @@ const { text } = require("stream/consumers");
 // set OK
 // text OK
 // search OK
-// filter
+// filter OK
 // update OK
 // save DEPRECATED
 // renamecollection OK
@@ -70,8 +70,8 @@ db.encomendas.aggregate([
 //Seleciona os funcionarios com salario maior ou igual a 1000
 db.funcionarios.find({ salario: { $gte: 1000 } }).pretty();
 
-  //Procura todos os funcionarios que são do sexo feminino
-db.funcionarios.createIndex({sex: "text"})
+//Procura todos os funcionarios que são do sexo feminino
+db.funcionarios.createIndex({sexo: "text"})
 
 db.funcionarios.find({
     $text: {
@@ -90,7 +90,7 @@ db.funcionarios.find({
   });
 
   // Atualizar o logradouro da Rua 2 para Rua 22
-db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { Valor: "Rua 22" } });
+db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { logradouro: "Rua 22" } });
 
 // Retorne as encomendas que custão mais de 1000 
 db.encomendas.find({
@@ -196,7 +196,20 @@ db.funcionarios.aggregate(
     ]
     );
 
-//24.filter - Retorna informações de acordo com as condiçoes sujeridas. mostrar o id do dentista e mostrar os que realizaram o procedimento 2
-db.clientes.aggregate([{"$project": {"nome": "Fernando Chaves","enderecos": {"$filter": {"input": "$endereco", "as": "end", "cond": { "$eq": ["$$end", 3]}}}}}]);
-    
-    db.funcionarios.renameCollection("entregadores");
+//Retorna as entregas que foram enviadas no mês 11
+db.encomendas.aggregate([
+    {
+      $project: {
+        _id:0,
+        items: {
+          $filter: {
+             input: "$items",
+             as: "item",
+             cond: { $gte: [ "$$item.fragil", true ] }
+          }
+       }
+      },
+    },
+  ]).pretty();
+
+db.funcionarios.renameCollection("entregadores");
