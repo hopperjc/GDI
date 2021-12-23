@@ -1,5 +1,7 @@
 // use db;
 
+const { text } = require("stream/consumers");
+
 // use OK
 // find OK 
 // size OK
@@ -21,7 +23,7 @@
 // pretty OK
 // all
 // set OK
-// text
+// text OK
 // search OK
 // filter
 // update
@@ -66,6 +68,7 @@ db.consultas.aggregate([
   ]).pretty();
 
   //Procura todos os funcionarios que são do sexo feminino
+db.funcionarios.createIndex({sexo: "text"})
 db.funcionarios.find({
     $text: {
       $search: "F",
