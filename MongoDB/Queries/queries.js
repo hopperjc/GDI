@@ -51,7 +51,7 @@ db.enderecos.aggregate([
 db.clientes.findOne({ cpf: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1})
 
 //Função que retorna uma mensagem indicando que a encomenda foi paga
-db.total_encomendas.aggregate([
+db.encomendas.aggregate([
     {
       $addFields: {
         message: {
@@ -72,6 +72,7 @@ db.funcionarios.find({ salario: { $gte: 1000 } }).pretty();
 
   //Procura todos os funcionarios que são do sexo feminino
 db.funcionarios.createIndex({sex: "text"})
+
 db.funcionarios.find({
     $text: {
       $search: "F",
