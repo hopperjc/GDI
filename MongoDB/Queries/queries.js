@@ -1,24 +1,24 @@
 // use db;
 
-// use
-// find
-// size
-// aggregate
-// match
-// project
+// use OK
+// find OK 
+// size OK
+// aggregate OK
+// match OK
+// project OK
 // gte
 // group
 // sum
 // count
 // max
 // avg
-// exists
-// sort
+// exists OK
+// sort OK
 // limit 
 // $where
 // mapreduce
 // function
-// pretty
+// pretty OK
 // all
 // set
 // text
@@ -29,7 +29,7 @@
 // renamecollection
 // cond
 // lookup
-// findone
+// findone OK
 // addtoset
 
 // Encontre a encomenda que pertence ao CLiente de id 2
