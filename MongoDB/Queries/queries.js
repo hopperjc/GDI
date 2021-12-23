@@ -29,7 +29,7 @@ const { text } = require("stream/consumers");
 // update OK
 // save DEPRECATED
 // renamecollection OK
-// cond
+// cond OK
 // lookup OK
 // findone OK
 // addtoset OK
