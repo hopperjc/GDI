@@ -10,8 +10,8 @@ const { text } = require("stream/consumers");
 // project OK
 // gte
 // group OK
-// sum
-// count
+// sum OK
+// count OK
 // max OK
 // avg OK
 // exists OK
@@ -30,7 +30,7 @@ const { text } = require("stream/consumers");
 // save OK
 // renamecollection OK
 // cond
-// lookup
+// lookup OK
 // findone OK
 // addtoset OK
 
@@ -51,7 +51,7 @@ db.enderecos.aggregate([
 db.clientes.findOne({ cpf: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1})
 
 //Função que retorna uma mensagem indicando que a encomenda foi paga
-db.consultas.aggregate([
+db.total_encomendas.aggregate([
     {
       $addFields: {
         message: {
@@ -121,3 +121,36 @@ db.funcionarios.aggregate([
 db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }])
 
 db.funcionarios.renameCollection("entregadores");
+
+
+// Listar Nome, Total de encomendas, custo total e médio das encomendas dos clientes
+db.encomendas.aggregate([
+  {
+    $lookup: {
+      from: "clientes",
+      localField: "cliente",
+      foreignField: "_id",
+      as: "cliente_info",
+    }
+  },
+  {
+    $unwind: "$cliente_info",
+  },
+  {
+    $group: {
+      _id: "$cliente_info.nome",
+      total_encomendas: { $count: {} },
+      valor_total: { $sum: "$custo" },
+      valor_medio: { $avg: "$custo" },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      nome: "$_id",
+      total_encomendas: 1,
+      valor_total: 1,
+      valor_medio: 1,
+    },
+  },
+]).pretty();
