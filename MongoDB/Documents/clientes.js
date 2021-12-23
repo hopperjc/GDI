@@ -1,5 +1,5 @@
 // Criando coleção de clientFirstMessageBare
-db.cliente.insert([
+db.cliente.insertMany([
     {
         _id: 1,
         nome : "José Augusto",

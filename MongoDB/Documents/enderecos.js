@@ -1,5 +1,5 @@
 // Criando coleção de endereços
-db.enderecos.insert([
+db.enderecos.insertMany([
     { 
         _id: 1,
         cep : "111111111",

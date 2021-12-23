@@ -1,4 +1,4 @@
-db.encomenda.insert([
+db.encomenda.insertMany([
     {
         _id: 1, 
         nome: "produto", 

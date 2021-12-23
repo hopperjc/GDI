@@ -1,5 +1,5 @@
 // Criando coleção de funcionários
-db.funcionarios.insert([
+db.funcionarios.insertMany([
     {
         _id: 1,
         nome : "José Augusto",
@@ -7,9 +7,7 @@ db.funcionarios.insert([
         dataNascimento : "14/08/1979",
         email : "jose@entregas.com.br",
         telefone : 81999999999,
-        sexo : "M",
-        salario : 5500,
-        funcao : "Gerente"
+        sexo : "M"
     },
     {
         _id: 2,
@@ -18,9 +16,7 @@ db.funcionarios.insert([
         dataNascimento: "11/07/1987",
         email: "anac@entregas.com.br",
         telefone: 81888888888,
-        sexo: "F",
-        salario: 3500,
-        funcao: "Embrulhador"
+        sexo: "F"
     },
     {
         _id: 3,
@@ -29,9 +25,7 @@ db.funcionarios.insert([
         dataNascimento: "04/01/1989",
         email: "helena@entregas.com.br",
         telefone: 81777777777,
-        sexo: "F",
-        salario: 3500,
-        funcao: "Embrulhador"
+        sexo: "F"
     },
     {
         _id: 4,
@@ -40,9 +34,7 @@ db.funcionarios.insert([
         dataNascimento : "03/04/1994",
         email : "lucas@entregas.com.br",
         telefone : 81666666666,
-        sexo : "M",
-        salario : 3000,
-        funcao : "Entregador"
+        sexo : "M"
     },
     {
         _id: 5,
@@ -51,9 +43,7 @@ db.funcionarios.insert([
         dataNascimento : "23/04/1996",
         email : "isa@entregas.com.br",
         telefone : 81555555555,
-        sexo : "F",
-        salario : 2500,
-        funcao : "Entregador"
+        sexo : "F"
     }
 ])
 // =-=-=-= DELETE =-=-=-=
