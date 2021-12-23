@@ -18,7 +18,7 @@ const { text } = require("stream/consumers");
 // sort OK
 // limit OK
 // $where OK
-// mapreduce OK
+// mapreduce DEPRECATED
 // function OK
 // pretty OK
 // all OK
@@ -27,7 +27,7 @@ const { text } = require("stream/consumers");
 // search OK
 // filter
 // update OK
-// save OK
+// save DEPRECATED
 // renamecollection OK
 // cond
 // lookup OK
@@ -134,47 +134,65 @@ db.encomendas.aggregate(
 db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }]);
 
 // 
-db.funcionarios.renameCollection("entregadores");
 
 // Listar Nome, Total de encomendas, custo total e médio das encomendas dos clientes
 db.encomendas.aggregate([
-  {
-    $lookup: {
-      from: "clientes",
-      localField: "cliente",
-      foreignField: "_id",
-      as: "cliente_info",
-    }
-  },
-  {
-    $unwind: "$cliente_info",
-  },
-  {
-    $group: {
-      _id: "$cliente_info.nome",
-      total_encomendas: { $count: {} },
-      valor_total: { $sum: "$custo" },
-      valor_medio: { $avg: "$custo" },
+    {
+        $lookup: {
+            from: "clientes",
+            localField: "cliente",
+            foreignField: "_id",
+            as: "cliente_info",
+        }
     },
-  },
-  {
-    $project: {
-      _id: 0,
-      nome: "$_id",
-      total_encomendas: 1,
-      valor_total: 1,
-      valor_medio: 1,
+    {
+        $unwind: "$cliente_info",
     },
-  },
+    {
+        $group: {
+            _id: "$cliente_info.nome",
+            total_encomendas: { $count: {} },
+            valor_total: { $sum: "$custo" },
+            valor_medio: { $avg: "$custo" },
+        },
+    },
+    {
+        $project: {
+            _id: 0,
+            nome: "$_id",
+            total_encomendas: 1,
+            valor_total: 1,
+            valor_medio: 1,
+        },
+    },
 ]).pretty();
 
 // transfome as medidas: comprimento, largura e altura de encomendas em volume.
 var map = function () {
     emit(this.medidas.comprimento, this.medidas.largura, this.medidas.altura);
-  };
-  var reduce = function (comprimento, largura, altura) {
+};
+var reduce = function (comprimento, largura, altura) {
     volume = comprimento*largura*altura
     return volume;
-  };
+};
 
-  db.encomendas.mapReduce(map, reduce, { out: "Results" });
+db.encomendas.mapReduce(map, reduce, { out: "Results" });
+
+// Aplicar um desconto de 20% nas encomendas acima de 1000 e 10% nos outros produtos
+db.funcionarios.aggregate(
+    [
+        {
+            $project:
+            {
+                nome:1, 
+                salario: 1,
+                aumento:
+                {
+                    $cond: { if: { $eq: [ "$salario", 900 ] }, then: 10, else: 30 }
+                }
+            }
+        }
+    ]
+    )
+    
+    db.funcionarios.renameCollection("entregadores");
