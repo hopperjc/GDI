@@ -108,14 +108,24 @@ db.funcionarios.aggregate([
 ])
 
   // adicionar altura nas medidas da encomenda 2
-  db.encomendas.update(
+db.encomendas.update(
     { _id: 2 },
     {
         $addToSet: {
             medidas: {altura: 4},
         },
     }
-  );
+);
+
+db.encomendas.aggregate(
+    [
+        {
+            $group:{
+                _id: 1, custoTotalEncomendas: {$sum: "$custo"}
+            }
+        }
+    ]
+)
 
 //Media salarial agrupado por genero
 db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }])
