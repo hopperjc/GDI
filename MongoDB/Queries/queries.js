@@ -77,7 +77,16 @@ db.funcionarios.find({
     $text: {
       $search: "F",
     },
-  }).pretty();
+}).pretty();
+
+// transfome as medidas: comprimento, largura e altura de encomendas em volume.
+var map = function () {
+    emit(this.medidas.comprimento, this.medidas.largura, this.medidas.altura);
+};
+var reduce = function (comprimento, largura, altura) {
+    volume = comprimento*largura*altura
+    return volume;
+};
 
   // nova encomenda de Carlos Antonio
   db.encomendas.save({
@@ -168,14 +177,6 @@ db.encomendas.aggregate([
     },
 ]).pretty();
 
-// transfome as medidas: comprimento, largura e altura de encomendas em volume.
-var map = function () {
-    emit(this.medidas.comprimento, this.medidas.largura, this.medidas.altura);
-};
-var reduce = function (comprimento, largura, altura) {
-    volume = comprimento*largura*altura
-    return volume;
-};
 
 db.encomendas.mapReduce(map, reduce, { out: "Results" });
 
@@ -211,5 +212,6 @@ db.encomendas.aggregate([
       },
     },
   ]).pretty();
+
 
 db.funcionarios.renameCollection("entregadores");
