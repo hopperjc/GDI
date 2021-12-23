@@ -16,17 +16,17 @@ const { text } = require("stream/consumers");
 // avg
 // exists OK
 // sort OK
-// limit 
-// $where
+// limit OK
+// $where OK
 // mapreduce
 // function OK
 // pretty OK
-// all
+// all OK
 // set OK
 // text OK
 // search OK
 // filter
-// update
+// update OK
 // save OK
 // renamecollection
 // cond
@@ -68,7 +68,7 @@ db.consultas.aggregate([
   ]).pretty();
 
   //Procura todos os funcionarios que são do sexo feminino
-db.funcionarios.createIndex({sexo: "text"})
+db.funcionarios.createIndex({sex: "text"})
 db.funcionarios.find({
     $text: {
       $search: "F",
@@ -87,3 +87,31 @@ db.funcionarios.find({
 
   // Atualizar o logradouro da Rua 2 para Rua 22
 db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { Valor: "Rua 22" } });
+
+// Retorne as encomendas que custão mais de 1000 
+db.encomendas.find({
+    $where: function () {
+      return this.custo > 1000;
+    },
+  });
+
+  // Pegar as três encomendas de maior valor
+db.encomendas.find().sort({ custo: -1 }).limit(3);
+
+// Listar as entregas realizadas em 2021
+db.pet.aggregate([
+    {
+      $project: {
+        Nome: 1,
+        vacinas: {
+          $filter: {
+            input: "$Vacinas",
+            as: "vacina",
+            cond: { $eq: [{ $year: "$$vacina.dataAplicacao" }, 2021] },
+          },
+        },
+      },
+    },
+  ]).pretty();
+
+  db.funcionarios.renameCollection("entregadores");
