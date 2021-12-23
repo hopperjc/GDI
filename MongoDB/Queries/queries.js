@@ -179,7 +179,7 @@ var reduce = function (comprimento, largura, altura) {
 
 db.encomendas.mapReduce(map, reduce, { out: "Results" });
 
-// Aplicar um desconto de 20% nas encomendas acima de 1000 e 10% nos outros produtos
+// Indica a comição de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
 db.funcionarios.aggregate(
     [
         {
@@ -189,7 +189,7 @@ db.funcionarios.aggregate(
                 salario: 1,
                 aumento:
                 {
-                    $cond: { if: { $eq: [ "$salario", 900 ] }, then: 10, else: 30 }
+                    $cond: { if: { $eq: [ "$salario", 2500 ] }, then: 10, else: 30 }
                 }
             }
         }
