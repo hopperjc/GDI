@@ -88,7 +88,9 @@ var reduce = function (comprimento, largura, altura) {
     return volume;
 };
 
-  // nova encomenda de Carlos Antonio
+db.encomendas.mapReduce(map, reduce, { out: "Results" });
+
+// nova encomenda de Carlos Antonio
   db.encomendas.save({
     peso: 15,
     comprimento: 15, 
@@ -98,7 +100,7 @@ var reduce = function (comprimento, largura, altura) {
     custo: 105.00
   });
 
-  // Atualizar o logradouro da Rua 2 para Rua 22
+// Atualizar o logradouro da Rua 2 para Rua 22
 db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { logradouro: "Rua 22" } });
 
 // Retorne as encomendas que custão mais de 1000 
@@ -120,7 +122,7 @@ db.funcionarios.aggregate([
     }
 ]);
 
-  // adicionar altura nas medidas da encomenda 2
+// adicionar altura nas medidas da encomenda 2
 db.encomendas.update(
     { _id: 2 },
     {
@@ -128,16 +130,6 @@ db.encomendas.update(
             medidas: {altura: 4},
         },
     }
-);
-
-db.encomendas.aggregate(
-    [
-        {
-            $group:{
-                _id: 1, custoTotalEncomendas: {$sum: "$custo"}
-            }
-        }
-    ]
 );
 
 // Media salarial agrupado por genero
@@ -178,7 +170,6 @@ db.encomendas.aggregate([
 ]).pretty();
 
 
-db.encomendas.mapReduce(map, reduce, { out: "Results" });
 
 // Indica a comissão de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
 db.funcionarios.aggregate(
