@@ -179,15 +179,15 @@ var reduce = function (comprimento, largura, altura) {
 
 db.encomendas.mapReduce(map, reduce, { out: "Results" });
 
-// Indica a comição de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
-db.funcionarios.aggregate(
+// Indica a comissão de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
+db.entregadores.aggregate(
     [
         {
             $project:
             {
                 nome:1, 
                 salario: 1,
-                aumento:
+                comissao:
                 {
                     $cond: { if: { $eq: [ "$salario", 2500 ] }, then: 10, else: 30 }
                 }
