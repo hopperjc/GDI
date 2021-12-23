@@ -7,12 +7,8 @@ db.cliente.insertMany([
         email : "carlinhos@gmail.com.br",
         telefone : 81999998888,
         sexo : "M",
-        enderecos: [
-            {
-                endereco: 1,
-                principal: true
-            }
-        ]
+        endereco_principal: 0,
+        enderecos: [1]
     },
     {
         _id: 2,
@@ -21,12 +17,8 @@ db.cliente.insertMany([
         email : "mclara@gmail.com.br",
         telefone : 81888887777,
         sexo : "F",
-        enderecos: [
-            {
-                endereco: 1,
-                principal: true
-            }
-        ]
+        endereco_principal: 1,
+        enderecos: [2, 5]
     },
     {
         _id: 3,
@@ -35,12 +27,8 @@ db.cliente.insertMany([
         email : "cmgato@gmail.com.br",
         telefone : 81777776666,
         sexo : "M",
-        enderecos: [
-            {
-                endereco: 1,
-                principal: true
-            }
-        ]
+        endereco_principal: 0,
+        enderecos: [4]
     },
     {
         _id: 4,
@@ -49,12 +37,8 @@ db.cliente.insertMany([
         email : "let@gmail.com.br",
         telefone : 81666665555,
         sexo : "F",
-        enderecos: [
-            {
-                endereco: 1,
-                principal: true
-            }
-        ]
+        endereco_principal: 0,
+        enderecos: [7]
     },
     {
         _id: 5,
@@ -63,11 +47,7 @@ db.cliente.insertMany([
         email : "nandinho@gmail.com.br",
         telefone : 81555554444,
         sexo : "M",
-        enderecos: [
-            {
-                endereco: 1,
-                principal: true
-            }
-        ]
+        endereco_principal: 0,
+        enderecos: [6,3]
     }
 ])
