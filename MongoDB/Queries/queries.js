@@ -9,11 +9,11 @@ const { text } = require("stream/consumers");
 // match OK
 // project OK
 // gte
-// group
+// group OK
 // sum
 // count
-// max
-// avg
+// max OK
+// avg OK
 // exists OK
 // sort OK
 // limit OK
@@ -98,34 +98,26 @@ db.encomendas.find({
   // Pegar as três encomendas de maior valor
 db.encomendas.find().sort({ custo: -1 }).limit(3);
 
-// Listar as entregas realizadas em 2021
-db.pet.aggregate([
+// sexo do empregado com maior salario
+db.funcionarios.aggregate([
     {
-      $project: {
-        Nome: 1,
-        vacinas: {
-          $filter: {
-            input: "$Vacinas",
-            as: "vacina",
-            cond: { $eq: [{ $year: "$$vacina.dataAplicacao" }, 2021] },
-          },
-        },
-      },
-    },
-  ]).pretty();
-
+        $group: {
+            _id: "$sexo", MaxSalario:{$max: "$salario"}
+        }
+    }
+])
 
   // adicionar altura nas medidas da encomenda 2
   db.encomendas.update(
     { _id: 2 },
     {
-      $addToSet: {
-        medidas: {altura: 4},
-      },
+        $addToSet: {
+            medidas: {altura: 4},
+        },
     }
   );
 
-//12.avg - Media salarial agrupado por genero
+//Media salarial agrupado por genero
 db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }])
 
-  db.funcionarios.renameCollection("entregadores");
+db.funcionarios.renameCollection("entregadores");
