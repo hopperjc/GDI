@@ -1,4 +1,4 @@
-db.encomenda.insertMany([
+db.encomendas.insertMany([
     {
         _id: 1,
         peso: 10, 

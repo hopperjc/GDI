@@ -1,16 +1,16 @@
-use db;
+// use db;
 
 // Encontre a encomenda que pertence ao CLiente de id 2
-db.encomenda.find({ client: { $exists: true, $all: [2] } }).pretty();
+db.encomendas.find({ cliente: { $exists: true, $all: [3] } }).pretty();
 
 // Encontre os clientes que possuem 2 endereços
-db.cliente.find({ endereco: { $size: 2 } }).pretty();
+db.clientes.find({ enderecos: { $size: 2 } }).pretty();
 
-// Listar email, telefone, sexo e endereço principa do cliente de nome "Carlos Manoel" 
-db.cliente.aggregate([
-    { $match: { nome: /^Carlos Manoel/i } },
-    { $sort: { endere_principal: 1 } },
-    { $project: { _id: 0, nome: 0, email: 1, telefone: 1, sexo: 1, endere_principal: 1, enderecos: 0 } },
+// Listar informações dos endereços de Recife ordenados por numero ascendente
+db.enderecos.aggregate([
+    { $match: { cidade: "Recife"} },
+    { $sort: { numero: 1 } },
+    { $project:  { _id: 0, cep : 1, logradouro : 1, bairro : 1, cidade : 1, estado : 1, numero: 1, complemento: 1, referencia: 1}},
   ]).pretty();
 
 // search Rua 2
