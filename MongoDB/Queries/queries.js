@@ -17,12 +17,12 @@
 // limit 
 // $where
 // mapreduce
-// function
+// function OK
 // pretty OK
 // all
 // set
 // text
-// search
+// search OK
 // filter
 // update
 // save
@@ -64,3 +64,10 @@ db.consultas.aggregate([
       },
     },
   ]).pretty();
+
+  //Procura todos os funcionarios que são do sexo feminino
+db.funcionarios.find({
+    $text: {
+      $search: "F",
+    },
+  }).pretty();
