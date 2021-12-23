@@ -18,7 +18,7 @@ const { text } = require("stream/consumers");
 // sort OK
 // limit OK
 // $where OK
-// mapreduce
+// mapreduce OK
 // function OK
 // pretty OK
 // all OK
@@ -86,7 +86,7 @@ db.funcionarios.find({
     altura: 8,
     cliente: 1,
     custo: 105.00
-  })
+  });
 
   // Atualizar o logradouro da Rua 2 para Rua 22
 db.enderecos.update({ logradouro: /Rua 2/i }, { $set: { Valor: "Rua 22" } });
@@ -108,7 +108,7 @@ db.funcionarios.aggregate([
             _id: "$sexo", MaxSalario:{$max: "$salario"}
         }
     }
-])
+]);
 
   // adicionar altura nas medidas da encomenda 2
 db.encomendas.update(
@@ -128,13 +128,13 @@ db.encomendas.aggregate(
             }
         }
     ]
-)
+);
 
-//Media salarial agrupado por genero
-db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }])
+// Media salarial agrupado por genero
+db.funcionarios.aggregate([{ $group: {_id:"$sexo", MediaSalarial: {$avg:"$salario"}} }]);
 
+// 
 db.funcionarios.renameCollection("entregadores");
-
 
 // Listar Nome, Total de encomendas, custo total e médio das encomendas dos clientes
 db.encomendas.aggregate([
@@ -167,3 +167,14 @@ db.encomendas.aggregate([
     },
   },
 ]).pretty();
+
+// transfome as medidas: comprimento, largura e altura de encomendas em volume.
+var map = function () {
+    emit(this.medidas.comprimento, this.medidas.largura, this.medidas.altura);
+  };
+  var reduce = function (comprimento, largura, altura) {
+    volume = comprimento*largura*altura
+    return volume;
+  };
+
+  db.encomendas.mapReduce(map, reduce, { out: "Results" });
