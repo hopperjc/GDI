@@ -194,7 +194,7 @@ db.funcionarios.aggregate(
             }
         }
     ]
-    );
+);
 
 //Retorna as entregas que foram enviadas no mês 11
 db.encomendas.aggregate([
