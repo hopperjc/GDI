@@ -179,21 +179,24 @@ var reduce = function (comprimento, largura, altura) {
 
 db.encomendas.mapReduce(map, reduce, { out: "Results" });
 
-// Indica a comissão de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
-db.entregadores.aggregate(
+// Indica a comição de 10% nos funcionarios que ganham acima de 2500 e 30% nos outros 
+db.funcionarios.aggregate(
     [
         {
             $project:
             {
                 nome:1, 
                 salario: 1,
-                comissao:
+                aumento:
                 {
                     $cond: { if: { $eq: [ "$salario", 2500 ] }, then: 10, else: 30 }
                 }
             }
         }
     ]
-    )
+    );
+
+//24.filter - Retorna informações de acordo com as condiçoes sujeridas. mostrar o id do dentista e mostrar os que realizaram o procedimento 2
+db.clientes.aggregate([{"$project": {"nome": "Fernando Chaves","enderecos": {"$filter": {"input": "$endereco", "as": "end", "cond": { "$eq": ["$$end", 3]}}}}}]);
     
     db.funcionarios.renameCollection("entregadores");
