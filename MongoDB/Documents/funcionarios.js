@@ -19,7 +19,7 @@ db.funcionarios.insertMany([
         email: "anac@entregas.com.br",
         telefone: 81888888888,
         sexo: "F",
-        salario: 2000,
+        salario: 900,
         NIT : "888.88888.88-8"
     },
     {
@@ -52,7 +52,7 @@ db.funcionarios.insertMany([
         email : "isa@entregas.com.br",
         telefone : 81555555555,
         sexo : "F",
-        salario: 2000,
+        salario: 1000,
         NIT : "555.55555.55-5"
     }
 ])
