@@ -46,6 +46,4 @@ db.enderecos.aggregate([
   ]).pretty();
 
 // Listar CPF, nome, email do cliente de CPF "999.888.777-66"
-db.clientes.findOne({ CPF: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1, telefone: 0, sexo: 0, endereco_principal: 0, enderecos: 0 });
-
-  
+db.clientes.findOne({ cpf: "999.888.777-66" }, { _id: 0, nome: 1, cpf: 1, email: 1})
